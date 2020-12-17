@@ -9,7 +9,14 @@ function ViewModel() {
             dataType: "json",
             success: result => {
                 let topRes = result.slice(0, 10)
-                this.searchResults(topRes.map(val => ({"name": val["Name"]})));
+                topRes = topRes.map(val => ({
+                    "id": val["Id"],
+                    "name": val["Name"],
+                    "numberTitles": val["Titles"]
+                }));
+
+                topRes.sort((a, b) => b["numberTitles"] - a["numberTitles"]);
+                this.searchResults(topRes);
             },
             error: (_, status, err) => {
                 console.error("App failed with status " + status);
