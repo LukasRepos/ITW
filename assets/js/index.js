@@ -2,22 +2,22 @@ function ViewModel() {
     this.searchResults = ko.observable();
 
     this.query = ko.observable();
-    this.query.subscribe(async latest => {
-        let actors = await searchForActors(latest);
-        actors = actors.slice(0, 10).map(async val => {
-            let actor = await getActorsByID(val["Id"]);
+    this.query.subscribe(latest => {
+        let actors = searchForActors(latest);
+        actors = actors.slice(0, 10).map(val => {
+            let actor = getActorsByID(val["Id"]);
             let titles = actor["Titles"]
-            titles.forEach(val => ({name: val}))
+            titles = titles.map(val => ({titleName: val["Name"], titleId: val["Id"]}));
             return {
-                "id": val["Id"],
-                "name": val["Name"],
-                "numberTitles": val["Titles"],
-                "titles": titles
+                id: val["Id"],
+                name: val["Name"],
+                numberTitles: val["Titles"],
+                titles: titles
             }
         });
         actors.sort((a, b) => b["numberTitles"] - a["numberTitles"]);
-        console.log(actors)
         this.searchResults(actors);
+        console.log(actors)
     }, this);
 
 }

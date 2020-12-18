@@ -53,6 +53,10 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title" data-bind="text: name"></h5>
+                            <p class="card-text">Filmes onde participou:</p>
+                            <ul class="list-group list-group-flush" data-bind="foreach: titles">
+                                <li class="list-group-item" data-bind="text: $data.titleName"></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -66,7 +70,7 @@
     <div class="container">
         <div class="navbar-text small">&copy;ITW2020 - Introdução ás Tecnologias Web</div>
         <div class="navbar-right navbar-text small d-none d-md-block">
-            <a href="www.ua.pt" title="Universidade de Aveiro">Universidade de Aveiro</a>
+            <a href="https://www.ua.pt" title="Universidade de Aveiro">Universidade de Aveiro</a>
         </div>
     </div>
 </footer>
