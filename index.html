@@ -49,13 +49,13 @@
                 <label for="searchBar">Query</label>
                 <input type="text" class="form-control" name="searchBar" id="searchBar" aria-describedby="Help"
                        placeholder="Actor" data-bind="value: query, valueUpdate: 'keyup'">
-                <ul data-bind="foreach: searchResults">
-                    <li>
-                        <span data-bind="text: id"></span>
-                        <span data-bind="text: name"></span>
-                        <span data-bind="text: numberTitles"></span>
-                    </li>
-                </ul>
+                <div data-bind="foreach: searchResults">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title" data-bind="text: name"></h5>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -76,6 +76,8 @@
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         crossorigin="anonymous"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/knockout/knockout-3.5.0.js"></script>
-<script type="module" src="./assets/js/index.js"></script>
+
+<script src="./assets/js/requests.js"></script>
+<script src="./assets/js/index.js"></script>
 </body>
 </html>

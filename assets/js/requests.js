@@ -1,8 +1,9 @@
-export function getActorsByID(id) {
+async function sendApiRequest(uri, data={}) {
     let res = null;
-    $.ajax({
-        url: `http://192.168.160.58/netflix/api/Search/Actors/${id}`,
+    await $.ajax({
+        url: `http://192.168.160.58/netflix/api/${uri}`,
         type: "GET",
+        data: data,
         dataType: "json",
         success: result => {
             res = result;
@@ -15,87 +16,65 @@ export function getActorsByID(id) {
     return res;
 }
 
-export function getCategoriesByID(id) {
-    let res = null;
-    $.ajax({
-        url: `http://192.168.160.58/netflix/api/Search/Categories/${id}`,
-        type: "GET",
-        dataType: "json",
-        success: result => {
-            res = result;
-        },
-        error: (_, status, err) => {
-            console.error("App request failed with status " + status);
-            console.error(err);
-        }
-    });
-    return res;
+// region By ID requests
+async function getActorsByID(id) {
+    let uri = `Actors/${id}`;
+    return sendApiRequest(uri);
 }
 
-export function getCountriesByID(id) {
-    let res = null;
-    $.ajax({
-        url: `http://192.168.160.58/netflix/api/Search/Countries/${id}`,
-        type: "GET",
-        dataType: "json",
-        success: result => {
-            res = result;
-        },
-        error: (_, status, err) => {
-            console.error("App request failed with status " + status);
-            console.error(err);
-        }
-    });
-    return res;
+async function getCategoriesByID(id) {
+    let uri = `Categories/${id}`;
+    return sendApiRequest(uri);
 }
 
-export function getDirectorsByID(id) {
-    let res = null;
-    $.ajax({
-        url: `http://192.168.160.58/netflix/api/Search/Directors/${id}`,
-        type: "GET",
-        dataType: "json",
-        success: result => {
-            res = result;
-        },
-        error: (_, status, err) => {
-            console.error("App request failed with status " + status);
-            console.error(err);
-        }
-    });
-    return res;
+async function getCountriesByID(id) {
+    let uri = `Countries/${id}`;
+    return sendApiRequest(uri);
 }
 
-export function getRatingsByID(id) {
-    let res = null;
-    $.ajax({
-        url: `http://192.168.160.58/netflix/api/Search/Ratings/${id}`,
-        type: "GET",
-        dataType: "json",
-        success: result => {
-            res = result;
-        },
-        error: (_, status, err) => {
-            console.error("App request failed with status " + status);
-            console.error(err);
-        }
-    });
-    return res;
+async function getDirectorsByID(id) {
+    let uri = `Directors/${id}`;
+    return sendApiRequest(uri);
 }
 
-export function getTitlesByID(id) {
-    let res = null;
-    $.ajax({
-        url: `http://192.168.160.58/netflix/api/Search/Titles/${id}`,
-        type: "GET",
-        dataType: "json",
-        success: result => {
-            res = result;
-        },
-        error: (_, status, err) => {
-            console.error("App request failed with status " + status);
-            console.error(err);
-        }
-    });
-    return res;
+async function getRatingsByID(id) {
+    let uri = `Ratings/${id}`;
+    return sendApiRequest(uri);
 }
+
+async function getTitlesByID(id) {
+    let uri = `Titles/${id}`;
+    return sendApiRequest(uri);
+}
+// endregion
+// region Search requests
+async function searchForActors(query) {
+    let uri = "Search/Actors";
+    let data = {name: query};
+    return await sendApiRequest(uri, data);
+}
+
+async function searchForCategories(query) {
+    let uri = "Search/Categories";
+    let data = {name: query};
+    return sendApiRequest(uri, data);
+}
+
+async function searchForCountries(query) {
+    let uri = "Search/Countries";
+    let data = {name: query};
+    return sendApiRequest(uri, data);
+}
+
+async function searchForDirectors(query) {
+    let uri = "Search/Directors";
+    let data = {name: query};
+    return sendApiRequest(uri, data);
+}
+
+async function searchForTitles(query) {
+    let uri = "Search/Titles";
+    let data = {name: query};
+    return sendApiRequest(uri, data);
+}
+// endregion
