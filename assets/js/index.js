@@ -1,25 +1,18 @@
 function ViewModel() {
-    this.searchResults = ko.observable();
-
-    this.query = ko.observable();
-    this.query.subscribe(latest => {
-        let actors = searchForActors(latest);
-        actors = actors.slice(0, 10).map(val => {
-            let actor = getActorsByID(val["Id"]);
-            let titles = actor["Titles"]
-            titles = titles.map(val => ({titleName: val["Name"], titleId: val["Id"]}));
-            return {
-                id: val["Id"],
-                name: val["Name"],
-                numberTitles: val["Titles"],
-                titles: titles
-            }
-        });
-        actors.sort((a, b) => b["numberTitles"] - a["numberTitles"]);
-        this.searchResults(actors);
-        console.log(actors)
-    }, this);
-
+    this.titleQuery = ko.observable();
+    this.titleResults = ko.observable([{
+        name: "Title1",
+        id: "Noice1",
+    }, {
+        name: "Title2",
+        id: "Noice2",
+    }, {
+        name: "Title3",
+        id: "Noice3",
+    }, {
+        name: "Title4",
+        id: "Noice4",
+    }]);
 }
 
 ko.applyBindings(new ViewModel());
