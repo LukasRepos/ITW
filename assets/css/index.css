@@ -1,6 +1,7 @@
 .hero {
+    font-family: 'Raleway', sans-serif;
     height: 100vh;
-    background-image: url("../images/backgroundHomePageTest3.jpeg");
+    background-image: url("../images/backgroundHomePage.jpeg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -21,7 +22,7 @@
 }
 
 .title-bg {
-    background-image: url("../images/backgroundTitlePage3FixedFixed.jpeg");
+    background-image: url("../images/backgroundTitlePage.jpeg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -35,7 +36,6 @@
 }
 
 body {
-    font-family: 'Raleway', sans-serif;
 }
 
 .pagination-container {

@@ -1,6 +1,6 @@
 function ViewModel() {
-    const NUMBER_TITLE_RECORDS = 50;
-    const TITLE_PAGESIZE = 50;
+    const NUMBER_TITLE_RECORDS = 20;
+    const TITLE_PAGESIZE = 20;
 
     this.maxPageSize = 11;
     this.currentPage = ko.observable(1);
@@ -21,10 +21,10 @@ function ViewModel() {
         yearOfRelease: "",
         type: ""
     });
+    this.bookmarkedMovies = ko.observableArray();
 
     this.titleDetailedInfo = function(id) {
         getTitleByID(id, res => {
-            console.log(res["Rating"])
             this.titleSearchResults.push({
                 actors: res["Actors"].map(val => ({ id: val["Id"], name: val["Name"] })),
                 categories: res["Categories"].map(val => ({ id: val["Id"], name: val["Name"] })),
@@ -76,7 +76,6 @@ function ViewModel() {
 
     this.setCurrentTitlePage = page => {
         if (page) this.currentPage(page);
-        console.log(page)
     }
 
     this.nextTitlePage = () => {
@@ -87,13 +86,25 @@ function ViewModel() {
         this.currentPage(this.currentPage() - 1);
     }
 
-    this.showTitleModal = (titleInfo) => {
+    this.showTitleModal = titleInfo => {
         this.currentTitleInfo(titleInfo);
-        console.log(this.currentTitleInfo());
         $("#titleInfoModal").modal({
             backdrop: 'static',
             keyboard: false
         });
+    }
+
+    this.bookmarkMovie = titleInfo => {
+        this.bookmarkedMovies.push({...titleInfo, dateBookmarked: new Date().toDateString()});
+    }
+
+    this.isBookmarked = id => {
+        let found = false
+        this.bookmarkedMovies().forEach(val => {
+           if (id === val["id"])
+               found = true;
+        });
+        return found;
     }
 
     this.titleQuery.subscribe((latest) => {
@@ -113,6 +124,10 @@ function ViewModel() {
         this.titleSearchResults([]);
         this.getTitlePage(latest)
     }, this);
+
+    this.bookmarkedMovies.subscribe(latest => {
+        console.log(latest);
+    }, this)
 
     // initialization
     this.getTitlePage(1);
