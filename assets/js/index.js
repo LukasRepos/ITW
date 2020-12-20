@@ -1,20 +1,35 @@
 function ViewModel() {
-    const NUMBER_TITLE_RECORDS = 10;
+    const NUMBER_TITLE_RECORDS = 50;
     const TITLE_PAGESIZE = 50;
 
     this.maxPageSize = 11;
     this.currentPage = ko.observable(1);
-    this.totalTitlePages = ko.observable(1);
+    this.totalTitlePages = ko.observable(1); // REVERT: 1
     this.titleSearchResults = ko.observableArray();
     this.titleQuery = ko.observable();
+    this.currentTitleInfo = ko.observable({
+        actors: "",
+        categories: "",
+        countries: "",
+        directors: "",
+        name: "",
+        added: "",
+        description: "",
+        duration: "",
+        id: "",
+        rating: "",
+        yearOfRelease: "",
+        type: ""
+    });
 
-    this.titleDetailedInfo = function (id) {
+    this.titleDetailedInfo = function(id) {
         getTitleByID(id, res => {
+            console.log(res["Rating"])
             this.titleSearchResults.push({
-                actors: res["Actors"].map(val => ({id: val["Id"], name: val["Name"]})),
-                categories: res["Categories"].map(val => ({id: val["Id"], name: val["Name"]})),
-                countries: res["Countries"].map(val => ({id: val["Id"], name: val["Name"]})),
-                directors: res["Directors"].map(val => ({id: val["Id"], name: val["Name"]})),
+                actors: res["Actors"].map(val => ({ id: val["Id"], name: val["Name"] })),
+                categories: res["Categories"].map(val => ({ id: val["Id"], name: val["Name"] })),
+                countries: res["Countries"].map(val => ({ id: val["Id"], name: val["Name"] })),
+                directors: res["Directors"].map(val => ({ id: val["Id"], name: val["Name"] })),
                 name: res["Name"],
                 added: res["DateAdded"],
                 description: res["Description"],
@@ -33,7 +48,7 @@ function ViewModel() {
         }, this);
     }
 
-    this.getTitlePage = function (page) {
+    this.getTitlePage = function(page) {
         getTitlesPage(page, TITLE_PAGESIZE, res => {
             this.totalTitlePages(res["TotalPages"]);
             res["Titles"].forEach(val => {
@@ -42,7 +57,7 @@ function ViewModel() {
         }, this);
     }
 
-    this.titlePaginationArray = function () {
+    this.titlePaginationArray = function() {
         let list = [];
         let offset = Math.trunc((this.maxPageSize - 1) / 2);
 
@@ -61,6 +76,7 @@ function ViewModel() {
 
     this.setCurrentTitlePage = page => {
         if (page) this.currentPage(page);
+        console.log(page)
     }
 
     this.nextTitlePage = () => {
@@ -69,6 +85,15 @@ function ViewModel() {
 
     this.prevTitlePage = () => {
         this.currentPage(this.currentPage() - 1);
+    }
+
+    this.showTitleModal = (titleInfo) => {
+        this.currentTitleInfo(titleInfo);
+        console.log(this.currentTitleInfo());
+        $("#titleInfoModal").modal({
+            backdrop: 'static',
+            keyboard: false
+        });
     }
 
     this.titleQuery.subscribe((latest) => {
@@ -85,7 +110,6 @@ function ViewModel() {
     }, this);
 
     this.currentPage.subscribe(latest => {
-        console.log("LATEST", latest);
         this.titleSearchResults([]);
         this.getTitlePage(latest)
     }, this);
