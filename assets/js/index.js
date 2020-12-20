@@ -107,6 +107,17 @@ function ViewModel() {
         return found;
     }
 
+    this.deserialize = () => {
+        this.bookmarkedMovies(JSON.parse(localStorage.getItem("bookmarks")))
+    }
+
+    this.removeBookmark = item => {
+        console.log(item);
+        let bookmarks = this.bookmarkedMovies();
+        let toRemove = bookmarks.find(val => (val["id"] === item["id"]));
+        this.bookmarkedMovies.remove(toRemove);
+    }
+
     this.titleQuery.subscribe((latest) => {
         if (latest === "") {
             this.getTitlePage(this.currentPage());
@@ -125,12 +136,13 @@ function ViewModel() {
         this.getTitlePage(latest)
     }, this);
 
-    this.bookmarkedMovies.subscribe(latest => {
-        console.log(latest);
+    this.bookmarkedMovies.subscribe(() => {
+        localStorage.setItem("bookmarks", JSON.stringify(this.bookmarkedMovies()))
     }, this)
 
     // initialization
     this.getTitlePage(1);
+    this.deserialize();
 }
 
 ko.applyBindings(new ViewModel());
