@@ -1,81 +1,141 @@
-function sendApiRequest(uri, data={}) {
-    let res = null;
+function sendApiRequest(uri, callback, data={}) {
     $.ajax({
         url: `http://192.168.160.58/netflix/api/${uri}`,
         type: "GET",
         data: data,
         dataType: "json",
-        async: false,
         success: result => {
-            res = result;
+            callback(result);
         },
         error: (_, status, err) => {
             console.error("App request failed with status " + status);
             console.error(err);
         }
     });
-    return res;
 }
 
-// region By ID requests
-function getActorsByID(id) {
-    let uri = `Actors/${id}`;
-    return sendApiRequest(uri);
+// region Get by ID
+function getActorByID(id, callback, context) {
+    const uri = `Actors/${id}`;
+    sendApiRequest(uri, callback.bind(context));
 }
 
-function getCategoriesByID(id) {
-    let uri = `Categories/${id}`;
-    return sendApiRequest(uri);
+function getCategoryByID(id, callback, context) {
+    const uri = `Categories/${id}`;
+    sendApiRequest(uri, callback.bind(context));
 }
 
-function getCountriesByID(id) {
-    let uri = `Countries/${id}`;
-    return sendApiRequest(uri);
+function getCountryByID(id, callback, context) {
+    const uri = `Countries/${id}`;
+    sendApiRequest(uri, callback.bind(context));
 }
 
-function getDirectorsByID(id) {
-    let uri = `Directors/${id}`;
-    return sendApiRequest(uri);
+function getDirectorByID(id, callback, context) {
+    const uri = `Directors/${id}`;
+    sendApiRequest(uri, callback.bind(context));
 }
 
-function getRatingsByID(id) {
-    let uri = `Ratings/${id}`;
-    return sendApiRequest(uri);
+function getRatingByID(id, callback, context) {
+    const uri = `Ratings/${id}`;
+    sendApiRequest(uri, callback.bind(context));
 }
 
-function getTitlesByID(id) {
-    let uri = `Titles/${id}`;
-    return sendApiRequest(uri);
+function getTitleByID(id, callback, context) {
+    const uri = `Titles/${id}`;
+    sendApiRequest(uri, callback.bind(context));
 }
 // endregion
-// region Search requests
-function searchForActors(query) {
-    let uri = "Search/Actors";
-    let data = {name: query};
-    return sendApiRequest(uri, data);
+// region Search
+function searchForActors(query, callback, context) {
+    const uri = "Search/Actors";
+    const data = {name: query};
+    sendApiRequest(uri, callback.bind(context), data);
 }
 
-function searchForCategories(query) {
-    let uri = "Search/Categories";
-    let data = {name: query};
-    return sendApiRequest(uri, data);
+function searchForCategories(query, callback, context) {
+    const uri = "Search/Categories";
+    const data = {name: query};
+    sendApiRequest(uri, callback.bind(context), data);
 }
 
-function searchForCountries(query) {
-    let uri = "Search/Countries";
-    let data = {name: query};
-    return sendApiRequest(uri, data);
+function searchForCountries(query, callback, context) {
+    const uri = "Search/Countries";
+    const data = {name: query};
+    sendApiRequest(uri, callback.bind(context), data);
 }
 
-function searchForDirectors(query) {
-    let uri = "Search/Directors";
-    let data = {name: query};
-    return sendApiRequest(uri, data);
+function searchForDirectors(query, callback, context) {
+    const uri = "Search/Directors";
+    const data = {name: query};
+    sendApiRequest(uri, callback.bind(context), data);
 }
 
-function searchForTitles(query) {
-    let uri = "Search/Titles";
-    let data = {name: query};
-    return sendApiRequest(uri, data);
+function searchForTitles(query, callback, context) {
+    const uri = "Search/Titles";
+    const data = {name: query};
+    sendApiRequest(uri, callback.bind(context), data);
+}
+// endregion
+// region Statistics
+function getAPIStatistics(callback, context) {
+    const uri = "Statistics";
+    sendApiRequest(uri, callback.bind(context));
+}
+// endregion
+// region Pagination
+function getActorsPage(page, pageSize, callback, context) {
+    const uri = "Actors";
+    const data = {
+        page: page,
+        pagesize: pageSize
+    }
+    sendApiRequest(uri, callback.bind(context), data);
+}
+
+function getCategoriesPage(page, pageSize, callback, context) {
+    const uri = "Categories";
+    const data = {
+        page: page,
+        pagesize: pageSize
+    }
+    sendApiRequest(uri, callback.bind(context), data);
+}
+
+function getCountriesPage(page, pageSize, callback, context) {
+    const uri = "Countries";
+    const data = {
+        page: page,
+        pagesize: pageSize
+    }
+    sendApiRequest(uri, callback.bind(context), data);
+}
+
+function getDirectorsPage(page, pageSize, callback, context) {
+    const uri = "Directors";
+    const data = {
+        page: page,
+        pagesize: pageSize
+    }
+    sendApiRequest(uri, callback.bind(context), data);
+}
+
+function getTitlesPage(page, pageSize, callback, context) {
+    const uri = "Titles";
+    const data = {
+        page: page,
+        pagesize: pageSize
+    }
+    sendApiRequest(uri, callback.bind(context), data);
+}
+// endregion
+// region Types
+function getTitleTypes(callback, context) {
+    const uri = "TitleTypes";
+    sendApiRequest(uri, callback.bind(context));
+}
+
+function getRatings(callback, context) {
+    const uri = "Ratings";
+    sendApiRequest(uri, callback.bind(context));
 }
 // endregion
