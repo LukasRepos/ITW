@@ -107,15 +107,18 @@ function ViewModel() {
         return found;
     }
 
-    this.deserialize = () => {
-        this.bookmarkedMovies(JSON.parse(localStorage.getItem("bookmarks")))
-    }
-
     this.removeBookmark = item => {
         console.log(item);
         let bookmarks = this.bookmarkedMovies();
         let toRemove = bookmarks.find(val => (val["id"] === item["id"]));
         this.bookmarkedMovies.remove(toRemove);
+    }
+    this.deleteAllBookmarks = () => {
+        this.bookmarkedMovies([]);
+    }
+
+    this.deserialize = () => {
+        this.bookmarkedMovies(JSON.parse(localStorage.getItem("bookmarks")))
     }
 
     this.titleQuery.subscribe((latest) => {
