@@ -4,4 +4,4 @@ Services to add:
 -> Directors (same DS as Actors) with Title linkage
 -> Ratings list with Title linkage
 -> Add statistics section with TitleTypes and Statistics requests
--> Allow searching by Title by Category
+-> Allow searching by Title by Category (autocomplete)

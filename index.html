@@ -6,6 +6,9 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Netflix">
+    <meta name="keywords" content="Netflix, netflix">
+    <meta name="author" content="Luís, Alexandre">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -24,6 +27,7 @@
 </head>
 
 <body>
+<!-- Navbar -->
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <img src="./assets/images/netflixText.png" alt="logo" height="30" class="navbar-brand"/>
     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#NavbarCollapse"
@@ -60,7 +64,9 @@
     </div>
 </nav>
 
+<!-- Tabs -->
 <div class="tab-content mb-5">
+    <!-- Home -->
     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
         <main role="main">
             <div class="jumbotron-fluid hero">
@@ -72,6 +78,7 @@
             </div>
         </main>
     </div>
+    <!-- Titles -->
     <div class="tab-pane fade show" id="titles" role="tabpanel" aria-labelledby="titles-tab">
         <main role="main">
             <div class="title-bg">
@@ -170,6 +177,7 @@
             </div>
         </main>
     </div>
+    <!-- Actors -->
     <div class="tab-pane fade show" id="actors" role="tabpanel" aria-labelledby="actors-tab">
         <main role="main">
             <div class="container">
@@ -254,6 +262,7 @@
             </div>
         </main>
     </div>
+    <!-- Bookmarks -->
     <div class="tab-pane fade show" id="bookmarks" role="tabpanel" aria-labelledby="bookmarks-tab">
         <main role="main">
             <div class="container">
@@ -296,6 +305,7 @@
     </div>
 </div>
 
+<!-- Modals -->
 <!-- Modal for titles -->
 <div class="modal fade" id="titleInfoModal" tabindex="-1" role="dialog" aria-labelledby="MoreInformationForTitle"
      aria-hidden="true">
@@ -456,6 +466,7 @@
     </div>
 </div>
 
+<!-- Footer -->
 <footer class="navbar navbar-dark fixed-bottom bg-dark">
     <div class="container">
         <div class="navbar-text small">&copy;ITW 2020 - Introdução ás Tecnologias Web</div>
@@ -465,12 +476,16 @@
     </div>
 </footer>
 
+<!-- Scripts -->
+<!-- JQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         crossorigin="anonymous"></script>
+<!-- KnockoutJS -->
 <script src="https://ajax.aspnetcdn.com/ajax/knockout/knockout-3.5.0.js"></script>
-
+<!-- Custom scripts -->
 <script src="./assets/js/requests.js"></script>
 <script src="./assets/js/index.js"></script>
 </body>
