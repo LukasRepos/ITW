@@ -8,8 +8,9 @@ function sendApiRequest(uri, callback, data={}) {
             callback(result);
         },
         error: (_, status, err) => {
-            console.error("App request failed with status " + status);
+            /*console.error("App request failed with status " + status);
             console.error(err);
+            console.trace();*/
         }
     });
 }
