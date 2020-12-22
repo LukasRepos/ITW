@@ -45,6 +45,13 @@ function ViewModel() {
 
     this.directorSearchResults = ko.observableArray();
     this.directorQuery = ko.observable();
+    this.currentDirectorPage = ko.observable(1);
+    this.totalDirectorPages = ko.observable(1);
+    this.currentDirectorInfo = ko.observable({
+        name: "",
+        id: "",
+        titles: []
+    });
 
     this.countrySearchResults = ko.observableArray();
     this.countryQuery = ko.observable();
@@ -144,6 +151,14 @@ function ViewModel() {
         });
     }
 
+    this.getDirectorPage = page => {
+        this.directorSearchResults([]);
+        getDirectorsPage(page, PAGESIZE, res => {
+            this.totalDirectorPages(res["TotalPages"]);
+            res["Directors"].forEach(val => this.directorDetailedInfo(val["Id"]));
+        }, this);
+    }
+
     this.fetchRatings = () => {
         this.ratings([]);
         getRatings(res => {
@@ -205,6 +220,23 @@ function ViewModel() {
         return list;
     }
 
+    this.directorPaginationArray = () => {
+        let list = [];
+        let offset = Math.trunc((this.maxPageSize - 1) / 2);
+
+        let left = this.currentDirectorPage() - offset;
+        let right = this.currentDirectorPage() + offset;
+
+        let newLeft = left > 1 ? left : 1;
+        let newRight = right < this.totalDirectorPages() ? right : this.totalDirectorPages();
+
+        for (let i = newLeft + newRight - right; i <= newRight + newLeft - left; i++) {
+            list.push(i);
+        }
+
+        return list;
+    }
+
     this.setCurrentTitlePage = page => {
         if (page) this.currentTitlePage(page);
     }
@@ -241,6 +273,18 @@ function ViewModel() {
         this.currentCountryPage(this.currentCountryPage() - 1);
     }
 
+    this.setCurrentDirectorPage = page => {
+        if (page) this.currentDirectorPage(page);
+    }
+
+    this.nextDirectorPage = () => {
+        this.currentDirectorPage(this.currentDirectorPage() + 1);
+    }
+
+    this.prevDirectorPage = () => {
+        this.currentDirectorPage(this.currentDirectorPage() - 1);
+    }
+
     this.showTitleModal = titleInfo => {
         this.currentTitleInfo(titleInfo);
         $("#titleInfoModal").modal({
@@ -267,8 +311,15 @@ function ViewModel() {
 
     this.showRatingModal = ratingInfo => {
         this.currentRatingInfo(ratingInfo);
-        console.log(ratingInfo)
         $("#ratingInfoModal").modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+    }
+
+    this.showDirectorModal = directorInfo => {
+        this.currentDirectorInfo(directorInfo);
+        $("#directorInfoModal").modal({
             backdrop: 'static',
             keyboard: false
         });
@@ -436,6 +487,8 @@ function ViewModel() {
 
     this.currentCountryPage.subscribe(latest => this.getCountryPage(latest), this);
 
+    this.currentDirectorPage.subscribe(latest => this.getDirectorPage(latest), this);
+
     this.bookmarkedTitles.subscribe(() => {
         localStorage.setItem("bookmarks", JSON.stringify(this.bookmarkedTitles()))
     }, this);
@@ -445,12 +498,14 @@ function ViewModel() {
         $("#countryInfoModal").modal("hide");
         $("#titleInfoModal").modal("hide");
         $("#ratingInfoModal").modal("hide");
+        $("#directorInfoModal").modal("hide");
     }
 
     // initialization
     this.getTitlePage(1);
     this.getActorPage(1);
     this.getCountryPage(1);
+    this.getDirectorPage(1);
     this.fetchRatings();
     this.deserialize();
 }

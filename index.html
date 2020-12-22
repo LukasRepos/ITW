@@ -322,12 +322,12 @@
                         <!-- ko foreach: countryPaginationArray() -->
                         <!-- ko if: $data == $parent.currentCountryPage() -->
                         <li class="page-item active">
-                            <a class="page-link" data-bind="text: $data, click: $parent.setCurrentActorPage"></a>
+                            <a class="page-link" data-bind="text: $data, click: $parent.setCurrentCountryPage"></a>
                         </li>
                         <!-- /ko -->
                         <!-- ko if: $data != $parent.currentCountryPage() -->
                         <li class="page-item">
-                            <a class="page-link" data-bind="text: $data, click: $parent.setCurrentActorPage"></a>
+                            <a class="page-link" data-bind="text: $data, click: $parent.setCurrentCountryPage"></a>
                         </li>
                         <!-- /ko -->
                         <!-- /ko -->
@@ -414,6 +414,56 @@
                            aria-describedby="SearchDirector" placeholder="Diretor"
                            data-bind="value: directorQuery, valueUpdate: 'keyup'">
                 </div>
+                <nav class=pagination-container aria-label="Title navigation">
+                    <ul class="pagination">
+                        <!-- ko if: currentDirectorPage() > 1 -->
+                        <li class="page-item page-button">
+                            <a class="page-link" aria-label="Previous" data-bind="click: prevDirectorPage">
+                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        <!-- /ko-->
+                        <!-- ko if: currentDirectorPage() <= 1 -->
+                        <li class="page-item disabled page-button">
+                            <a class="page-link" aria-label="Previous" data-bind="click: prevDirectorPage">
+                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        <!-- /ko-->
+
+                        <!-- ko foreach: directorPaginationArray() -->
+                        <!-- ko if: $data == $parent.currentDirectorPage() -->
+                        <li class="page-item active">
+                            <a class="page-link" data-bind="text: $data, click: $parent.setCurrentDirectorPage"></a>
+                        </li>
+                        <!-- /ko -->
+                        <!-- ko if: $data != $parent.currentDirectorPage() -->
+                        <li class="page-item">
+                            <a class="page-link" data-bind="text: $data, click: $parent.setCurrentDirectorPage"></a>
+                        </li>
+                        <!-- /ko -->
+                        <!-- /ko -->
+
+                        <!-- ko if: currentDirectorPage() < totalDirectorPages() -->
+                        <li class="page-item page-button">
+                            <a class="page-link" aria-label="Next" data-bind="click: nextDirectorPage">
+                                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                        <!-- /ko-->
+                        <!-- ko if: currentDirectorPage() >= totalDirectorPages() -->
+                        <li class="page-item page-button disabled">
+                            <a class="page-link" aria-label="Next" data-bind="click: nextDirectorPage">
+                                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                        <!-- /ko-->
+                    </ul>
+                </nav>
                 <table class="table table-striped table-sm small">
                     <thead>
                     <tr>
@@ -426,6 +476,13 @@
                     <tr>
                         <td data-bind="text: id"></td>
                         <td data-bind="text: name"></td>
+                        <td class="text-right">
+                            <button class="btn btn-sm" data-bind="click: $parent.showDirectorModal">
+                                <a class="btn btn-sm">
+                                    <i class="fa fa-eye" title="Selecione para ver detalhes"></i>
+                                </a>
+                            </button>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -807,6 +864,49 @@
                             <!-- /ko -->
                             <!-- /ko -->
                             <!-- ko if: currentCountryInfo().titles.length == 0 -->
+                            <i class="fa fa-video-camera"></i>
+                            <a>Sem informação disponível para mostrar</a>
+                            <!-- /ko -->
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal for directors -->
+<div class="modal fade" id="directorInfoModal" tabindex="-1" role="dialog" aria-labelledby="MoreInformationForRating"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" data-bind="text: currentDirectorInfo().name"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped table-sm small">
+                    <tr class="row">
+                        <th class="col-md-3">Filmes realizados</th>
+                        <td class="col-md-9">
+                            <!-- ko if: currentDirectorInfo().titles.length > 0 -->
+                            <!-- ko foreach: currentDirectorInfo().titles.slice(0, 10) -->
+                            <button type="button" class="btn btn-sm" data-bind="click: $parent.switchToTitleInfo">
+                                <i class="fa fa-video-camera"></i>
+                                <a data-bind="text: name"></a>
+                                (<span data-bind="text: id"></span>)
+                            </button>
+                            <br>
+                            <!-- /ko -->
+                            <!-- ko if: currentDirectorInfo().titles.length > 10 -->
+                            <p>Entre outros</p>
+                            <!-- /ko -->
+                            <!-- /ko -->
+                            <!-- ko if: currentDirectorInfo().titles.length == 0 -->
                             <i class="fa fa-video-camera"></i>
                             <a>Sem informação disponível para mostrar</a>
                             <!-- /ko -->
