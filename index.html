@@ -524,9 +524,11 @@
                 </table>
                 <!-- /ko -->
                 <!-- ko if: bookmarkedTitles().length == 0 -->
-                <p>Nenhum favorito para mostrar. Para começar vá á Tab <i>Filmes</i> e favorite um filme!</p>
+                <p>Nenhum favorito para mostrar. Para começar pesquise um filme!</p>
                 <!-- /ko -->
+                <!-- ko if: bookmarkedTitles().length > 0 -->
                 <button class="btn btn-danger" data-bind="click: deleteAllBookmarks">Delete all bookmarks</button>
+                <!-- /ko -->
             </div>
         </main>
     </div>
@@ -690,9 +692,11 @@
                         <td class="col-md-9">
                             <!-- ko if: currentTitleInfo().directors.length > 0 -->
                             <div data-bind="foreach: currentTitleInfo().directors">
-                                <i class="fa fa-user-o"></i>
-                                <a data-bind="text: name"></a>
-                                (<span data-bind="text: id"></span>)
+                                <button class="btn btn-sm" data-bind="click: $parent.switchToDirectorInfo">
+                                    <i class="fa fa-user-o"></i>
+                                    <a data-bind="text: name"></a>
+                                    (<span data-bind="text: id"></span>)
+                                </button>
                             </div>
                             <!-- /ko -->
                             <!-- ko if: currentTitleInfo().directors.length == 0 -->

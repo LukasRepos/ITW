@@ -370,9 +370,15 @@ function ViewModel() {
 
     this.switchToRatingInfo = rating => {
         this.closeAllModals();
-        console.log(rating)
         getRatingByID(rating["id"], res => {
             this.showRatingModal(this.formatAPIRatingResponse(res));
+        }, this);
+    }
+
+    this.switchToDirectorInfo = country => {
+        this.closeAllModals();
+        getDirectorByID(country["id"], res => {
+            this.showDirectorModal(this.formatAPIDirectorResponse(res));
         }, this);
     }
 
