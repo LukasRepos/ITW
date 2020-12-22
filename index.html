@@ -1,5 +1,5 @@
 ﻿<!doctype html>
-<html lang="pt-pt">
+<html lang="en">
 
 <head>
     <title>Netflix</title>
@@ -28,7 +28,7 @@
 
 <body>
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <img src="./assets/images/netflixText.png" alt="logo" height="30" class="navbar-brand"/>
     <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#NavbarCollapse"
             aria-controls="NavbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,27 +51,6 @@
                 <a class="nav-link" id="actors-tab" data-toggle="pill" href="#actors" role="tab" aria-controls="actors"
                    aria-selected="false" style="margin-right:10px"><i class="fa fa-user" aria-hidden="true"></i>
                     Atores
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="countries-tab" data-toggle="pill" href="#countries" role="tab"
-                   aria-controls="countries"
-                   aria-selected="false" style="margin-right:10px"><i class="fa fa-user" aria-hidden="true"></i>
-                    Countries
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="ratings-tab" data-toggle="pill" href="#ratings" role="tab"
-                   aria-controls="ratings"
-                   aria-selected="false" style="margin-right:10px"><i class="fa fa-user" aria-hidden="true"></i>
-                    Ratings
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="directors-tab" data-toggle="pill" href="#directors" role="tab"
-                   aria-controls="directors"
-                   aria-selected="false" style="margin-right:10px"><i class="fa fa-user" aria-hidden="true"></i>
-                    Directors
                 </a>
             </li>
             <li class="nav-item">
@@ -290,205 +269,6 @@
             </div>
         </main>
     </div>
-    <!-- Countries -->
-    <div class="tab-pane fade show" id="countries" role="tabpanel" aria-labelledby="countries-tab">
-        <main role="main">
-            <div class="container">
-                <div class="form-group">
-                    <label for="CountrySearchBar">Pesquisa</label>
-                    <input type="text" class="form-control" name="CountrySearchBar" id="CountrySearchBar"
-                           aria-describedby="SearchCountry" placeholder="País"
-                           data-bind="value: countryQuery, valueUpdate: 'keyup'">
-                </div>
-                <nav class=pagination-container aria-label="Title navigation">
-                    <ul class="pagination">
-                        <!-- ko if: currentCountryPage() > 1 -->
-                        <li class="page-item page-button">
-                            <a class="page-link" aria-label="Previous" data-bind="click: prevCountryPage">
-                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <!-- /ko-->
-                        <!-- ko if: currentCountryPage() <= 1 -->
-                        <li class="page-item disabled page-button">
-                            <a class="page-link" aria-label="Previous" data-bind="click: prevCountryPage">
-                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <!-- /ko-->
-
-                        <!-- ko foreach: countryPaginationArray() -->
-                        <!-- ko if: $data == $parent.currentCountryPage() -->
-                        <li class="page-item active">
-                            <a class="page-link" data-bind="text: $data, click: $parent.setCurrentCountryPage"></a>
-                        </li>
-                        <!-- /ko -->
-                        <!-- ko if: $data != $parent.currentCountryPage() -->
-                        <li class="page-item">
-                            <a class="page-link" data-bind="text: $data, click: $parent.setCurrentCountryPage"></a>
-                        </li>
-                        <!-- /ko -->
-                        <!-- /ko -->
-
-                        <!-- ko if: currentCountryPage() < totalCountryPages() -->
-                        <li class="page-item page-button">
-                            <a class="page-link" aria-label="Next" data-bind="click: nextCountryPage">
-                                <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                        <!-- /ko-->
-                        <!-- ko if: currentCountryPage() >= totalCountryPages() -->
-                        <li class="page-item page-button disabled">
-                            <a class="page-link" aria-label="Next" data-bind="click: nextCountryPage">
-                                <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                        <!-- /ko-->
-                    </ul>
-                </nav>
-                <table class="table table-striped table-sm small">
-                    <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Title</th>
-                        <th scope="col" class="text-right"></th>
-                    </tr>
-                    </thead>
-                    <tbody data-bind="foreach: countrySearchResults">
-                    <tr>
-                        <td data-bind="text: id"></td>
-                        <td data-bind="text: name"></td>
-                        <td class="text-right">
-                            <button class="btn btn-sm" data-bind="click: $parent.showCountryModal">
-                                <a class="btn btn-sm">
-                                    <i class="fa fa-eye" title="Selecione para ver detalhes"></i>
-                                </a>
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </main>
-    </div>
-    <!-- Ratings -->
-    <div class="tab-pane fade show" id="ratings" role="tabpanel" aria-labelledby="ratings-tab">
-        <main role="main">
-            <div class="container">
-                <table class="table table-striped table-sm small">
-                    <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Code</th>
-                        <th scope="col" class="text-right"></th>
-                    </tr>
-                    </thead>
-                    <tbody data-bind="foreach: ratings">
-                    <tr>
-                        <td data-bind="text: id"></td>
-                        <td data-bind="text: code"></td>
-                        <td class="text-right">
-                            <button class="btn btn-sm" data-bind="click: $parent.showRatingModal">
-                                <a class="btn btn-sm">
-                                    <i class="fa fa-eye" title="Selecione para ver detalhes"></i>
-                                </a>
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </main>
-    </div>
-    <!-- Directors -->
-    <div class="tab-pane fade show" id="directors" role="tabpanel" aria-labelledby="directors-tab">
-        <main role="main">
-            <div class="container">
-                <div class="form-group">
-                    <label for="DirectorSearchBar">Pesquisa</label>
-                    <input type="text" class="form-control" name="DirectorSearchBar" id="DirectorSearchBar"
-                           aria-describedby="SearchDirector" placeholder="Diretor"
-                           data-bind="value: directorQuery, valueUpdate: 'keyup'">
-                </div>
-                <nav class=pagination-container aria-label="Title navigation">
-                    <ul class="pagination">
-                        <!-- ko if: currentDirectorPage() > 1 -->
-                        <li class="page-item page-button">
-                            <a class="page-link" aria-label="Previous" data-bind="click: prevDirectorPage">
-                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <!-- /ko-->
-                        <!-- ko if: currentDirectorPage() <= 1 -->
-                        <li class="page-item disabled page-button">
-                            <a class="page-link" aria-label="Previous" data-bind="click: prevDirectorPage">
-                                <i class="fa fa-arrow-left" aria-hidden="true"></i>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <!-- /ko-->
-
-                        <!-- ko foreach: directorPaginationArray() -->
-                        <!-- ko if: $data == $parent.currentDirectorPage() -->
-                        <li class="page-item active">
-                            <a class="page-link" data-bind="text: $data, click: $parent.setCurrentDirectorPage"></a>
-                        </li>
-                        <!-- /ko -->
-                        <!-- ko if: $data != $parent.currentDirectorPage() -->
-                        <li class="page-item">
-                            <a class="page-link" data-bind="text: $data, click: $parent.setCurrentDirectorPage"></a>
-                        </li>
-                        <!-- /ko -->
-                        <!-- /ko -->
-
-                        <!-- ko if: currentDirectorPage() < totalDirectorPages() -->
-                        <li class="page-item page-button">
-                            <a class="page-link" aria-label="Next" data-bind="click: nextDirectorPage">
-                                <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                        <!-- /ko-->
-                        <!-- ko if: currentDirectorPage() >= totalDirectorPages() -->
-                        <li class="page-item page-button disabled">
-                            <a class="page-link" aria-label="Next" data-bind="click: nextDirectorPage">
-                                <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                        <!-- /ko-->
-                    </ul>
-                </nav>
-                <table class="table table-striped table-sm small">
-                    <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Name</th>
-                        <th scope="col" class="text-right"></th>
-                    </tr>
-                    </thead>
-                    <tbody data-bind="foreach: directorSearchResults">
-                    <tr>
-                        <td data-bind="text: id"></td>
-                        <td data-bind="text: name"></td>
-                        <td class="text-right">
-                            <button class="btn btn-sm" data-bind="click: $parent.showDirectorModal">
-                                <a class="btn btn-sm">
-                                    <i class="fa fa-eye" title="Selecione para ver detalhes"></i>
-                                </a>
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </main>
-    </div>
     <!-- Bookmarks -->
     <div class="tab-pane fade show" id="bookmarks" role="tabpanel" aria-labelledby="bookmarks-tab">
         <main role="main">
@@ -527,91 +307,6 @@
                 <p>Nenhum favorito para mostrar. Para começar vá á Tab <i>Filmes</i> e favorite um filme!</p>
                 <!-- /ko -->
                 <button class="btn btn-danger" data-bind="click: deleteAllBookmarks">Delete all bookmarks</button>
-            </div>
-        </main>
-    </div>
-    <!-- Search -->
-    <div class="tab-pane fade show" id="search" role="tabpanel" aria-labelledby="search-tab">
-        <main role="main">
-            <div class="container">
-                <div class="form-group">
-                    <label for="TitleSearchBarCustom">Titulo</label>
-                    <input type="text" class="form-control" name="TitleSearchBarCustom" id="TitleSearchBarCustom"
-                           aria-describedby="SearchForTitle" placeholder="Titulo" data-bind="value: customSearchTitle">
-                </div>
-
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" data-bind="checked: customSearchCountryVisible">
-                        País
-                    </label>
-                </div>
-                <div class="form-group" data-bind="hidden: !customSearchCountryVisible()">
-                    <label for="CountrySearchBarCustom">País</label>
-                    <input type="text" class="form-control" name="TitleSearchBarCustom" id="CountrySearchBarCustom"
-                           aria-describedby="SearchForTitle" placeholder="País" data-bind="value: customSearchCountry">
-                </div>
-
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input"
-                               data-bind="checked: customSearchCategoryVisible">
-                        Categoria
-                    </label>
-                </div>
-                <div class="form-group" data-bind="hidden: !customSearchCategoryVisible()">
-                    <label for="CategorySearchBarCustom">Categoria</label>
-                    <input type="text" class="form-control" name="TitleSearchBarCustom" id="CategorySearchBarCustom"
-                           aria-describedby="SearchForTitle" placeholder="Categoria"
-                           data-bind="value: customSearchCategory">
-                </div>
-
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" data-bind="checked: customSearchActorVisible">
-                        Ator
-                    </label>
-                </div>
-                <div class="form-group" data-bind="hidden: !customSearchActorVisible()">
-                    <label for="ActorSearchBarCustom">Ator</label>
-                    <input type="text" class="form-control" name="TitleSearchBarCustom" id="ActorSearchBarCustom"
-                           aria-describedby="SearchForTitle" placeholder="Ator" data-bind="value: customSearchActor">
-                </div>
-                <button class="btn btn-primary" data-bind="click: performSearch">Pesquisar</button>
-                <table class="table table-striped table-sm small title-table">
-                    <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Title</th>
-                        <th scope="col" class="text-right"></th>
-                    </tr>
-                    </thead>
-                    <tbody data-bind="foreach: customSearchResults">
-                    <tr>
-                        <td data-bind="text: id"></td>
-                        <td data-bind="text: name"></td>
-                        <td class="text-right">
-                            <button class="btn btn-sm" data-bind="click: $parent.showTitleModal">
-                                <a class="btn btn-sm">
-                                    <i class="fa fa-eye" title="Selecione para ver detalhes"></i>
-                                </a>
-                            </button>
-                            <!-- ko if: $parent.isBookmarked(id) -->
-                            <button class="btn btn-sm" data-bind="click: $parent.removeBookmark">
-                                <i class="fa fa-heart"
-                                   title="Remover dos favoritos"></i>
-                            </button>
-                            <!-- /ko -->
-                            <!-- ko if: !$parent.isBookmarked(id) -->
-                            <button class="btn btn-sm" data-bind="click: $parent.bookmarkMovie">
-                                <i class="fa fa-heart-o"
-                                   title="Selecione para adicionar aos favoritos!"></i>
-                            </button>
-                            <!-- /ko -->
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
             </div>
         </main>
     </div>
@@ -664,11 +359,9 @@
                         <th class="col-md-3">Países de lançamento</th>
                         <td class="col-md-9">
                             <div data-bind="foreach: currentTitleInfo().countries">
-                                <button class="btn btn-sm" data-bind="click: $parent.switchToCountryInfo">
-                                    <i class="fa fa-flag-o"></i>
-                                    <a data-bind="text: name"></a>
-                                    (<span data-bind="text: id"></span>)
-                                </button>
+                                <i class="fa fa-flag-o"></i>
+                                <a data-bind="text: name"></a>
+                                (<span data-bind="text: id"></span>)
                             </div>
                         </td>
                     </tr>
@@ -709,13 +402,9 @@
                         <th class="col-md-3">Classificação</th>
                         <td class="col-md-9">
                             <!-- ko if: currentTitleInfo().rating != null -->
-                            <!-- ko with: currentTitleInfo().rating -->
-                            <button type="button" class="btn btn-sm" data-bind="click: $parent.switchToRatingInfo">
-                                <i class="fa fa-star-o"></i>
-                                <a data-bind="text: code"></a>
-                                (<span data-bind="text: id"></span>)
-                            </button>
-                            <!-- /ko -->
+                            <i class="fa fa-star-o"></i>
+                            <a data-bind="text: currentTitleInfo().rating.code"></a>
+                            (<span data-bind="text: currentTitleInfo().rating.id"></span>)
                             <!-- /ko -->
                             <!-- ko if: currentTitleInfo().rating == null -->
                             <i class="fa fa-star-o"></i>
@@ -769,144 +458,7 @@
                             <br>
                             <!-- /ko -->
                             <!-- /ko -->
-                            <!-- ko if: currentActorInfo().titles.length == 0 -->
-                            <i class="fa fa-video-camera"></i>
-                            <a>Sem informação disponível para mostrar</a>
-                            <!-- /ko -->
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal for ratings -->
-<div class="modal fade" id="ratingInfoModal" tabindex="-1" role="dialog" aria-labelledby="MoreInformationForRating"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" data-bind="text: currentRatingInfo().code"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-striped table-sm small">
-                    <tr class="row">
-                        <th class="col-md-3">Descrição</th>
-                        <td class="col-md-9" data-bind="text: currentRatingInfo().desc"></td>
-                    </tr>
-                    <tr class="row">
-                        <th class="col-md-3">Classificação</th>
-                        <td class="col-md-9" data-bind="text: currentRatingInfo().class"></td>
-                    </tr>
-                    <tr class="row">
-                        <th class="col-md-3">Filmes classificados</th>
-                        <td class="col-md-9">
-                            <!-- ko if: currentRatingInfo().titles.length > 0 -->
-                            <!-- ko foreach: currentRatingInfo().titles.slice(0, 10) -->
-                            <button type="button" class="btn btn-sm" data-bind="click: $parent.switchToTitleInfo">
-                                <i class="fa fa-video-camera"></i>
-                                <a data-bind="text: name"></a>
-                                (<span data-bind="text: id"></span>)
-                            </button>
-                            <br>
-                            <!-- /ko -->
-                            <!-- ko if: currentRatingInfo().titles.length > 10 -->
-                            <p>Entre outros</p>
-                            <!-- /ko -->
-                            <!-- /ko -->
-                            <!-- ko if: currentRatingInfo().titles.length == 0 -->
-                            <i class="fa fa-video-camera"></i>
-                            <a>Sem informação disponível para mostrar</a>
-                            <!-- /ko -->
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal for countries -->
-<div class="modal fade" id="countryInfoModal" tabindex="-1" role="dialog" aria-labelledby="MoreInformationForCountry"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" data-bind="text: currentCountryInfo().name"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-striped table-sm small">
-                    <tr class="row">
-                        <th class="col-md-3">Filmes publicados</th>
-                        <td class="col-md-9">
-                            <!-- ko if: currentCountryInfo().titles.length > 0 -->
-                            <!-- ko foreach: currentCountryInfo().titles.slice(0, 10) -->
-                            <button type="button" class="btn btn-sm" data-bind="click: $parent.switchToTitleInfo">
-                                <i class="fa fa-video-camera"></i>
-                                <a data-bind="text: name"></a>
-                                (<span data-bind="text: id"></span>)
-                            </button>
-                            <br>
-                            <!-- /ko -->
-                            <!-- ko if: currentCountryInfo().titles.length > 10 -->
-                            <p>Entre outros</p>
-                            <!-- /ko -->
-                            <!-- /ko -->
-                            <!-- ko if: currentCountryInfo().titles.length == 0 -->
-                            <i class="fa fa-video-camera"></i>
-                            <a>Sem informação disponível para mostrar</a>
-                            <!-- /ko -->
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal for directors -->
-<div class="modal fade" id="directorInfoModal" tabindex="-1" role="dialog" aria-labelledby="MoreInformationForRating"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" data-bind="text: currentDirectorInfo().name"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-striped table-sm small">
-                    <tr class="row">
-                        <th class="col-md-3">Filmes realizados</th>
-                        <td class="col-md-9">
-                            <!-- ko if: currentDirectorInfo().titles.length > 0 -->
-                            <!-- ko foreach: currentDirectorInfo().titles.slice(0, 10) -->
-                            <button type="button" class="btn btn-sm" data-bind="click: $parent.switchToTitleInfo">
-                                <i class="fa fa-video-camera"></i>
-                                <a data-bind="text: name"></a>
-                                (<span data-bind="text: id"></span>)
-                            </button>
-                            <br>
-                            <!-- /ko -->
-                            <!-- ko if: currentDirectorInfo().titles.length > 10 -->
-                            <p>Entre outros</p>
-                            <!-- /ko -->
-                            <!-- /ko -->
-                            <!-- ko if: currentDirectorInfo().titles.length == 0 -->
+                            <!-- ko if: currentTitleInfo().actors.length == 0 -->
                             <i class="fa fa-video-camera"></i>
                             <a>Sem informação disponível para mostrar</a>
                             <!-- /ko -->
