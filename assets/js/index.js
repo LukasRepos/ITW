@@ -53,6 +53,15 @@ function ViewModel() {
         titles: []
     });
 
+    this.ratings = ko.observableArray();
+    this.currentRatingInfo = ko.observable({
+        id: "",
+        code: "",
+        "class": "",
+        "desc": "",
+        titles: []
+    });
+
     this.performSearch = () => {
         this.customSearchResults([]);
         searchForTitles(this.customSearchTitle(), res => {
@@ -97,7 +106,7 @@ function ViewModel() {
     }
 
     this.countryDetailedInfo = id => {
-        getCountryByID(id,res => {
+        getCountryByID(id, res => {
             this.countrySearchResults.push(this.formatAPICountryResponse(res));
         }, this);
     }
@@ -106,7 +115,7 @@ function ViewModel() {
         this.titleSearchResults([]);
         getTitlesPage(page, PAGESIZE, res => {
             this.totalTitlePages(res["TotalPages"]);
-            res["Titles"].forEach(val => this.titleDetailedInfo(val["Id"]) );
+            res["Titles"].forEach(val => this.titleDetailedInfo(val["Id"]));
         }, this);
     }
 
@@ -124,6 +133,15 @@ function ViewModel() {
             this.totalCountryPages(res["TotalPages"]);
             res["Countries"].forEach(val => this.countryDetailedInfo(val["Id"]));
         });
+    }
+
+    this.fetchRatings = () => {
+        this.ratings([]);
+        getRatings(res => {
+            res.forEach(val => getRatingByID(val["Id"], rating => {
+                this.ratings.push(this.formatAPIRatingResponse(rating));
+            }, this));
+        }, this);
     }
 
     this.titlePaginationArray = () => {
@@ -238,6 +256,15 @@ function ViewModel() {
         });
     }
 
+    this.showRatingModal = ratingInfo => {
+        this.currentRatingInfo(ratingInfo);
+        console.log(ratingInfo)
+        $("#ratingInfoModal").modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+    }
+
     this.bookmarkMovie = titleInfo => {
         this.bookmarkedTitles.push({...titleInfo, dateBookmarked: new Date().toDateString()});
     }
@@ -245,8 +272,8 @@ function ViewModel() {
     this.isBookmarked = id => {
         let found = false
         this.bookmarkedTitles().forEach(val => {
-           if (id === val["id"])
-               found = true;
+            if (id === val["id"])
+                found = true;
         });
         return found;
     }
@@ -277,7 +304,15 @@ function ViewModel() {
     this.switchToCountryInfo = country => {
         this.closeAllModals();
         getCountryByID(country["id"], res => {
-            this.showCountryModal(this.formatAPIActorResponse(res));
+            this.showCountryModal(this.formatAPICountryResponse(res));
+        }, this);
+    }
+
+    this.switchToRatingInfo = rating => {
+        this.closeAllModals();
+        console.log(rating)
+        getRatingByID(rating["id"], res => {
+            this.showRatingModal(this.formatAPIRatingResponse(res));
         }, this);
     }
 
@@ -288,10 +323,10 @@ function ViewModel() {
     }
 
     this.formatAPITitleResponse = response => ({
-        actors: response["Actors"].map(val => ({ id: val["Id"], name: val["Name"] })),
-        categories: response["Categories"].map(val => ({ id: val["Id"], name: val["Name"] })),
-        countries: response["Countries"].map(val => ({ id: val["Id"], name: val["Name"] })),
-        directors: response["Directors"].map(val => ({ id: val["Id"], name: val["Name"] })),
+        actors: response["Actors"].map(val => ({id: val["Id"], name: val["Name"]})),
+        categories: response["Categories"].map(val => ({id: val["Id"], name: val["Name"]})),
+        countries: response["Countries"].map(val => ({id: val["Id"], name: val["Name"]})),
+        directors: response["Directors"].map(val => ({id: val["Id"], name: val["Name"]})),
         name: response["Name"],
         added: response["DateAdded"],
         description: response["Description"],
@@ -318,6 +353,14 @@ function ViewModel() {
         name: response["Name"],
         id: response["Id"],
         titles: response["Titles"].map(val => ({name: val["Name"], id: val["Id"]}))
+    })
+
+    this.formatAPIRatingResponse = response => ({
+        id: response["Id"],
+        code: response["Code"],
+        "class": response["Classe"],
+        desc: response["Description"],
+        titles: response["Titles"].map(title => ({id: title["Id"], name: title["Name"]}))
     })
 
     this.titleQuery.subscribe(latest => {
@@ -373,12 +416,14 @@ function ViewModel() {
         $("#actorInfoModal").modal("hide");
         $("#countryInfoModal").modal("hide");
         $("#titleInfoModal").modal("hide");
+        $("#ratingInfoModal").modal("hide");
     }
 
     // initialization
     this.getTitlePage(1);
     this.getActorPage(1);
     this.getCountryPage(1);
+    this.fetchRatings();
     this.deserialize();
 }
 
