@@ -63,6 +63,16 @@ function ViewModel() {
         titles: []
     });
 
+    this.categorySearchResults = ko.observableArray();
+    this.categoryQuery = ko.observable();
+    this.currentCategoryPage = ko.observable(1);
+    this.totalCategoryPages = ko.observable(1);
+    this.currentCategoryInfo = ko.observable({
+        name: "",
+        id: "",
+        titles: []
+    });
+
     this.ratings = ko.observableArray();
     this.currentRatingInfo = ko.observable({
         id: "",
@@ -127,6 +137,12 @@ function ViewModel() {
         }, this);
     }
 
+    this.categoryDetailedInfo = id => {
+        getCategoryByID(id, res => {
+            this.categorySearchResults.push(this.formatAPICategoryResponse(res));
+        }, this);
+    }
+
     this.getTitlePage = page => {
         this.titleSearchResults([]);
         getTitlesPage(page, PAGESIZE, res => {
@@ -156,6 +172,14 @@ function ViewModel() {
         getDirectorsPage(page, PAGESIZE, res => {
             this.totalDirectorPages(res["TotalPages"]);
             res["Directors"].forEach(val => this.directorDetailedInfo(val["Id"]));
+        }, this);
+    }
+
+    this.getCategoryPage = page => {
+        this.categorySearchResults([]);
+        getCategoriesPage(page, PAGESIZE, res => {
+            this.totalCategoryPages(res["TotalPages"]);
+            res["Categories"].forEach(val => this.categoryDetailedInfo(val["Id"]));
         }, this);
     }
 
@@ -237,6 +261,24 @@ function ViewModel() {
         return list;
     }
 
+    this.categoryPaginationArray = () => {
+        let list = [];
+        let pagesize = Math.min(this.maxPageSize, this.totalCategoryPages());
+        let offset = Math.trunc((pagesize - 1) / 2);
+
+        let left = this.currentCategoryPage() - offset;
+        let right = this.currentCategoryPage() + offset;
+
+        let newLeft = left > 1 ? left : 1;
+        let newRight = right < this.totalCategoryPages() ? right : this.totalCategoryPages();
+
+        for (let i = newLeft + newRight - right; i <= newRight + newLeft - left; i++) {
+            list.push(i);
+        }
+
+        return list;
+    }
+
     this.setCurrentTitlePage = page => {
         if (page) this.currentTitlePage(page);
     }
@@ -285,6 +327,18 @@ function ViewModel() {
         this.currentDirectorPage(this.currentDirectorPage() - 1);
     }
 
+    this.setCurrentCategoryPage = page => {
+        if (page) this.currentCategoryPage(page);
+    }
+
+    this.nextCategoryPage = () => {
+        this.currentCategoryPage(this.currentCategoryPage() + 1);
+    }
+
+    this.prevCategoryPage = () => {
+        this.currentCategoryPage(this.currentCategoryPage() - 1);
+    }
+
     this.showTitleModal = titleInfo => {
         this.currentTitleInfo(titleInfo);
         $("#titleInfoModal").modal({
@@ -321,6 +375,14 @@ function ViewModel() {
         this.currentDirectorInfo(directorInfo);
         $("#directorInfoModal").modal({
             backdrop: 'static',
+            keyboard: false
+        });
+    }
+
+    this.showCategoryModal = categoryInfo => {
+        this.currentCategoryInfo(categoryInfo);
+        $("#categoryInfoModal").modal({
+            backdrop: "static",
             keyboard: false
         });
     }
@@ -382,6 +444,13 @@ function ViewModel() {
         }, this);
     }
 
+    this.switchToCategoryInfo = category => {
+        this.closeAllModals();
+        getCategoryByID(category["id"], res => {
+            this.showCategoryModal(this.formatAPICategoryResponse(res));
+        }, this);
+    }
+
     this.deserialize = () => {
         const store = JSON.parse(localStorage.getItem("bookmarks"));
         if (store)
@@ -435,6 +504,12 @@ function ViewModel() {
         titles: response["Titles"].map(title => ({id: title["Id"], name: title["Name"]}))
     })
 
+    this.formatAPICategoryResponse = response => ({
+        id: response["Id"],
+        name: response["Name"],
+        titles: response["Titles"].map(title => ({id: title["Id"], name: title["Name"]}))
+    })
+
     this.titleQuery.subscribe(latest => {
         if (latest === "") {
             this.getTitlePage(this.currentTitlePage());
@@ -476,7 +551,7 @@ function ViewModel() {
 
     this.directorQuery.subscribe(latest => {
         if (latest === "") {
-            // this.getActorPage(this.currentActorPage())
+            this.getDirectorPage(this.currentDirectorPage())
             return;
         }
 
@@ -484,6 +559,19 @@ function ViewModel() {
         searchForDirectors(latest, res => {
             res = res.slice(0, NUMBER_RECORDS);
             res.forEach(val => this.directorDetailedInfo(val["Id"]));
+        }, this);
+    }, this);
+
+    this.categoryQuery.subscribe(latest => {
+        if (latest === "") {
+            this.getCategoryPage(this.currentCategoryPage())
+            return;
+        }
+
+        this.categorySearchResults([]);
+        searchForCategories(latest, res => {
+            res = res.slice(0, NUMBER_RECORDS);
+            res.forEach(val => this.categoryDetailedInfo(val["Id"]));
         }, this);
     }, this);
 
@@ -495,8 +583,10 @@ function ViewModel() {
 
     this.currentDirectorPage.subscribe(latest => this.getDirectorPage(latest), this);
 
+    this.currentCategoryPage.subscribe(latest => this.getCategoryPage(latest), this);
+
     this.bookmarkedTitles.subscribe(() => {
-        localStorage.setItem("bookmarks", JSON.stringify(this.bookmarkedTitles()))
+        localStorage.setItem("bookmarks", JSON.stringify(this.bookmarkedTitles()));
     }, this);
 
     this.closeAllModals = () => {
@@ -505,6 +595,7 @@ function ViewModel() {
         $("#titleInfoModal").modal("hide");
         $("#ratingInfoModal").modal("hide");
         $("#directorInfoModal").modal("hide");
+        $("#categoryInfoModal").modal("hide");
     }
 
     // initialization
@@ -512,6 +603,7 @@ function ViewModel() {
     this.getActorPage(1);
     this.getCountryPage(1);
     this.getDirectorPage(1);
+    this.getCategoryPage(1);
     this.fetchRatings();
     this.deserialize();
 }
