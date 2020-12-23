@@ -4,6 +4,7 @@ function ViewModel() {
     const CHARTID = "statisticsChart"
 
     this.maxPageSize = 11;
+    let statisticsChart = null;
 
     this.customSearchCountryVisible = ko.observable(false);
     this.customSearchCategoryVisible = ko.observable(false);
@@ -629,7 +630,12 @@ function ViewModel() {
                 }]
             };
 
-            createChart(CHARTID, data);
+            if (statisticsChart) {
+                statisticsChart["chart"]["data"] = data;
+                statisticsChart.update();
+            } else {
+                statisticsChart = createChart(CHARTID, data);
+            }
         }, this);
     }
 
@@ -648,7 +654,12 @@ function ViewModel() {
                 }]
             };
 
-            createChart(CHARTID, data);
+            if (statisticsChart) {
+                statisticsChart["chart"]["data"] = data;
+                statisticsChart.update();
+            } else {
+                statisticsChart = createChart(CHARTID, data);
+            }
         }, this);
     }
 
