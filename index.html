@@ -723,7 +723,18 @@
     <div class="tab-pane fade show" id="statistics" role="tabpanel" aria-labelledby="statistics-tab">
         <main role="main">
             <div class="container">
-
+                <div class="form-group">
+                    <label for="InformationType">Selecione o tipo de informação</label>
+                    <select class="form-control" name="InformationType" id="InformationType"
+                            data-bind="value: statisticsOptions">
+                        <option selected disabled hidden>-- Escolha um tipo de dados --</option>
+                        <option value="0">Estatisticas gerais</option>
+                        <option value="1">Tipos de filme</option>
+                    </select>
+                </div>
+                <div style="position: relative; top: 0; left: 0;">
+                    <canvas id="statisticsChart"></canvas>
+                </div>
             </div>
         </main>
     </div>
@@ -1105,6 +1116,7 @@
         integrity="sha256-eA+ych7t31OjiXs3fYU0iWjn9HvXMiCLmunP2Gpghok=" crossorigin="anonymous"></script>
 <!-- Custom scripts -->
 <script src="./assets/js/requests.js"></script>
+<script src="./assets/js/charts.js"></script>
 <script src="./assets/js/index.js"></script>
 </body>
 

@@ -1,6 +1,7 @@
 function ViewModel() {
     const NUMBER_RECORDS = 20;
     const PAGESIZE = 20;
+    const CHARTID = "statisticsChart"
 
     this.maxPageSize = 11;
 
@@ -81,6 +82,8 @@ function ViewModel() {
         "desc": "",
         titles: []
     });
+
+    this.statisticsOptions = ko.observable();
 
     this.performSearch = () => {
         this.customSearchResults([]);
@@ -451,10 +454,13 @@ function ViewModel() {
         }, this);
     }
 
-    this.deserialize = () => {
-        const store = JSON.parse(localStorage.getItem("bookmarks"));
-        if (store)
-            this.bookmarkedTitles(store);
+    this.closeAllModals = () => {
+        $("#actorInfoModal").modal("hide");
+        $("#countryInfoModal").modal("hide");
+        $("#titleInfoModal").modal("hide");
+        $("#ratingInfoModal").modal("hide");
+        $("#directorInfoModal").modal("hide");
+        $("#categoryInfoModal").modal("hide");
     }
 
     this.formatAPITitleResponse = response => ({
@@ -589,13 +595,61 @@ function ViewModel() {
         localStorage.setItem("bookmarks", JSON.stringify(this.bookmarkedTitles()));
     }, this);
 
-    this.closeAllModals = () => {
-        $("#actorInfoModal").modal("hide");
-        $("#countryInfoModal").modal("hide");
-        $("#titleInfoModal").modal("hide");
-        $("#ratingInfoModal").modal("hide");
-        $("#directorInfoModal").modal("hide");
-        $("#categoryInfoModal").modal("hide");
+    this.statisticsOptions.subscribe(latest => {
+        switch (latest) {
+            case "0":
+                this.generateGeneralStatistics();
+                break;
+            case "1":
+                this.generateTypeStatistics();
+                break;
+        }
+    });
+
+    this.deserialize = () => {
+        const store = JSON.parse(localStorage.getItem("bookmarks"));
+        if (store)
+            this.bookmarkedTitles(store);
+    }
+
+    this.generateGeneralStatistics = () => {
+        getAPIStatistics(res => {
+            const data = {
+                labels: ["Atores", "Categorias", "Paises", "Diretores", "Filmes"],
+                datasets: [{
+                    label: "My First Dataset",
+                    data: [res["Actors"], res["Categories"], res["Countries"], res["Directors"], res["Titles"]],
+                    backgroundColor: [
+                        "rgb(255, 99, 132)",
+                        "rgb(54, 162, 235)",
+                        "rgb(48, 107, 52)",
+                        "rgb(53, 59, 60)",
+                        "rgb(210, 215, 223)"
+                    ]
+                }]
+            };
+
+            createChart(CHARTID, data);
+        }, this);
+    }
+
+    this.generateTypeStatistics = () => {
+        getTitleTypes(res => {
+            console.log(res);
+            const data = {
+                labels: ["Filme", "TV Show"],
+                datasets: [{
+                    label: "My First Dataset",
+                    data: [res[0]["Titles"], res[1]["Titles"]],
+                    backgroundColor: [
+                        "rgb(255, 99, 132)",
+                        "rgb(54, 162, 235)"
+                    ]
+                }]
+            };
+
+            createChart(CHARTID, data);
+        }, this);
     }
 
     // initialization
