@@ -2,3 +2,7 @@ Services to add:
 
 -> Add statistics section with TitleTypes and Statistics requests (ChartJS)
 -> Add search categories
+
+-> Adicionar maneira de aumentar ou diminuir numero de linhas de tabela visualizados de cada vez
+-> FIXME: Não consigo fazer scroll para baixo https://imgur.com/a/Xq1YH7V
+-> Na secção de ratings, ter "Criança" ou "Adulto" no espaço branco entre Code e o botão Modal
