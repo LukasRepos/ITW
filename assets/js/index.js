@@ -9,11 +9,17 @@ function ViewModel() {
     this.customSearchCountryVisible = ko.observable(false);
     this.customSearchCategoryVisible = ko.observable(false);
     this.customSearchActorVisible = ko.observable(false);
+
+    this.customSearchTitleError = ko.observable(false);
+    this.customSearchCountryError = ko.observable(false);
+    this.customSearchCategoryError = ko.observable(false);
+    this.customSearchActorError = ko.observable(false);
+
     this.customSearchResults = ko.observableArray();
-    this.customSearchTitle = ko.observable();
-    this.customSearchCountry = ko.observable();
-    this.customSearchCategory = ko.observable();
-    this.customSearchActor = ko.observable();
+    this.customSearchTitle = ko.observable("");
+    this.customSearchCountry = ko.observable("");
+    this.customSearchCategory = ko.observable("");
+    this.customSearchActor = ko.observable("");
 
     this.currentTitlePage = ko.observable(1);
     this.totalTitlePages = ko.observable(1); // REVERT: 1
@@ -92,6 +98,17 @@ function ViewModel() {
     this.statisticsOptions = ko.observable();
 
     this.performSearch = () => {
+        if (!this.validateSearch()) {
+            this.customSearchResults([]);
+            return;
+        }
+
+        // reset the error flags
+        this.customSearchTitleError(false);
+        this.customSearchCountryError(false);
+        this.customSearchCategoryError(false);
+        this.customSearchActorError(false);
+
         this.customSearchResults([]);
         searchForTitles(this.customSearchTitle(), res => {
             res.forEach(val => getTitleByID(val["Id"], title => {
@@ -101,20 +118,12 @@ function ViewModel() {
 
                 let toAdd = true;
 
-                if (!inCountries && this.customSearchCountryVisible()) {
-                    console.log("Failed by Country");
+                if (!inCountries && this.customSearchCountryVisible())
                     toAdd = false;
-                }
-
-                if (!inCategories && this.customSearchCategoryVisible()) {
-                    console.log("Failed by Category");
+                if (!inCategories && this.customSearchCategoryVisible())
                     toAdd = false;
-                }
-
-                if (!inActors && this.customSearchActorVisible()) {
-                    console.log("Failed by Actors");
+                if (!inActors && this.customSearchActorVisible())
                     toAdd = false;
-                }
 
                 if (toAdd)
                     this.customSearchResults.push(this.formatAPITitleResponse(title));
@@ -615,12 +624,6 @@ function ViewModel() {
         }
     });
 
-    this.deserialize = () => {
-        const store = JSON.parse(localStorage.getItem("bookmarks"));
-        if (store)
-            this.bookmarkedTitles(store);
-    }
-
     this.generateGeneralStatistics = () => {
         getAPIStatistics(res => {
             const data = {
@@ -669,6 +672,38 @@ function ViewModel() {
                 statisticsChart = createChart(CHARTID, data);
             }
         }, this);
+    }
+
+    this.deserialize = () => {
+        const store = JSON.parse(localStorage.getItem("bookmarks"));
+        if (store)
+            this.bookmarkedTitles(store);
+    }
+
+    this.validateSearch = () => {
+        let res = true;
+
+        if (this.customSearchTitle().trim().length === 0) {
+            res = false;
+            this.customSearchTitleError(true);
+        }
+
+        if (this.customSearchCountryVisible() && this.customSearchCountry().trim().length === 0) {
+            res = false;
+            this.customSearchCountryError(true);
+        }
+
+        if (this.customSearchCategoryVisible() && this.customSearchCategory().trim().length === 0) {
+            res = false;
+            this.customSearchCategoryError(true);
+        }
+
+        if (this.customSearchActorVisible() && this.customSearchActor().trim().length === 0) {
+            res = false;
+            this.customSearchActorError(true);
+        }
+
+        return res;
     }
 
     // initialization

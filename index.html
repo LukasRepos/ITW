@@ -644,7 +644,8 @@
                     <div class="form-group">
                         <label for="TitleSearchBarCustom">Titulo</label>
                         <input type="text" class="form-control" name="TitleSearchBarCustom" id="TitleSearchBarCustom"
-                               aria-describedby="SearchForTitle" placeholder="Titulo" data-bind="value: customSearchTitle">
+                               aria-describedby="SearchForTitle" placeholder="Título" data-bind="value: customSearchTitle">
+                        <p data-bind="visible: customSearchTitleError" class="text-danger">Insira um título!</p>
                     </div>
 
                     <div class="form-check">
@@ -657,6 +658,7 @@
                         <label for="CountrySearchBarCustom">País</label>
                         <input type="text" class="form-control" name="TitleSearchBarCustom" id="CountrySearchBarCustom"
                                aria-describedby="SearchForTitle" placeholder="País" data-bind="value: customSearchCountry">
+                        <p data-bind="visible: customSearchCountryError" class="text-danger">Insira o nome de um país!</p>
                     </div>
 
                     <div class="form-check">
@@ -671,6 +673,7 @@
                         <input type="text" class="form-control" name="TitleSearchBarCustom" id="CategorySearchBarCustom"
                                aria-describedby="SearchForTitle" placeholder="Categoria"
                                data-bind="value: customSearchCategory">
+                        <p data-bind="visible: customSearchCategoryError" class="text-danger">Insira o nome de uma categoria!</p>
                     </div>
 
                     <div class="form-check">
@@ -683,8 +686,10 @@
                         <label for="ActorSearchBarCustom">Ator</label>
                         <input type="text" class="form-control" name="TitleSearchBarCustom" id="ActorSearchBarCustom"
                                aria-describedby="SearchForTitle" placeholder="Ator" data-bind="value: customSearchActor">
+                        <p data-bind="visible: customSearchActorError" class="text-danger">Insira o nome de um ator!</p>
                     </div>
                     <button class="btn btn-primary" data-bind="click: performSearch">Pesquisar</button>
+                    <!-- ko if: customSearchResults().length > 0 -->
                     <table class="table table-striped table-sm small title-table">
                         <thead>
                             <tr>
@@ -719,6 +724,7 @@
                             </tr>
                         </tbody>
                     </table>
+                    <!-- /ko -->
                 </div>
             </div>
         </main>
