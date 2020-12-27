@@ -55,14 +55,15 @@ body {
 }
 
 .actors-bg {
-    background-image: url("../images/backgroundActorsPage.jpg");
+    background-image: url("../images/backgroundActorsPage2.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
     background-position-y: bottom;
     margin-bottom: 0;
-    min-height: 100vh;
+    height: 100vw; /*Eu sei que isto parece estupido, mas e a unica coisa que funcionava*/
 }
+
 
 .countries-bg {
     background-image: url("../images/backgroundCountriesPage.jpg");
@@ -71,7 +72,6 @@ body {
     background-position: center center;
     background-position-y: bottom;
     margin-bottom: 0;
-    min-height: 100vh;
 }
 
 .ratings-bg {
