@@ -53,3 +53,63 @@ body {
 .page-button {
     width: 35px;
 }
+
+.actors-bg {
+    background-image: url("../images/backgroundActorsPage.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-position-y: bottom;
+    margin-bottom: 0;
+    min-height: 100vh;
+}
+
+.countries-bg {
+    background-image: url("../images/backgroundCountriesPage.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-position-y: bottom;
+    margin-bottom: 0;
+    min-height: 100vh;
+}
+
+.ratings-bg {
+    background-image: url("../images/backgroundRatingsPage.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-position-y: bottom;
+    margin-bottom: 0;
+    min-height: 100vh;
+}
+
+.directors-bg {
+    background-image: url("../images/backgroundDirectorsPage.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-position-y: bottom;
+    margin-bottom: 0;
+    min-height: 100vh;
+}
+
+.categories-bg {
+    background-image: url("../images/backgroundCategoriesPage.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-position-y: bottom;
+    margin-bottom: 0;
+    min-height: 100vh;
+}
+
+.search-bg {
+    background-image: url("../images/backgroundSearchPage.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-position-y: bottom;
+    margin-bottom: 0;
+    min-height: 100vh;
+}
