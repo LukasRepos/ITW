@@ -19,6 +19,7 @@ function ViewModel() {
     this.totalTitlePages = ko.observable(1); // REVERT: 1
     this.titleSearchResults = ko.observableArray();
     this.titleQuery = ko.observable();
+    this.titleRecordCount = ko.observable(NUMBER_RECORDS);
     this.currentTitleInfo = ko.observable({
         actors: "",
         categories: "",
@@ -39,6 +40,7 @@ function ViewModel() {
     this.actorQuery = ko.observable();
     this.currentActorPage = ko.observable(1);
     this.totalActorPages = ko.observable(1);
+    this.actorRecordCount = ko.observable(NUMBER_RECORDS);
     this.currentActorInfo = ko.observable({
         name: "",
         id: "",
@@ -49,6 +51,7 @@ function ViewModel() {
     this.directorQuery = ko.observable();
     this.currentDirectorPage = ko.observable(1);
     this.totalDirectorPages = ko.observable(1);
+    this.directorRecordCount = ko.observable(NUMBER_RECORDS);
     this.currentDirectorInfo = ko.observable({
         name: "",
         id: "",
@@ -59,6 +62,7 @@ function ViewModel() {
     this.countryQuery = ko.observable();
     this.currentCountryPage = ko.observable(1);
     this.totalCountryPages = ko.observable(1);
+    this.countryRecordCount = ko.observable(NUMBER_RECORDS);
     this.currentCountryInfo = ko.observable({
         name: "",
         id: "",
@@ -69,6 +73,7 @@ function ViewModel() {
     this.categoryQuery = ko.observable();
     this.currentCategoryPage = ko.observable(1);
     this.totalCategoryPages = ko.observable(1);
+    this.categoryRecordCount = ko.observable(NUMBER_RECORDS);
     this.currentCategoryInfo = ko.observable({
         name: "",
         id: "",
@@ -198,7 +203,8 @@ function ViewModel() {
 
     this.titlePaginationArray = () => {
         let list = [];
-        let offset = Math.trunc((this.maxPageSize - 1) / 2);
+        let pagesize = Math.min(this.maxPageSize, this.totalTitlePages());
+        let offset = Math.trunc((pagesize - 1) / 2);
 
         let left = this.currentTitlePage() - offset;
         let right = this.currentTitlePage() + offset;
@@ -215,7 +221,8 @@ function ViewModel() {
 
     this.actorPaginationArray = () => {
         let list = [];
-        let offset = Math.trunc((this.maxPageSize - 1) / 2);
+        let pagesize = Math.min(this.maxPageSize, this.totalActorPages());
+        let offset = Math.trunc((pagesize - 1) / 2);
 
         let left = this.currentActorPage() - offset;
         let right = this.currentActorPage() + offset;
@@ -250,7 +257,8 @@ function ViewModel() {
 
     this.directorPaginationArray = () => {
         let list = [];
-        let offset = Math.trunc((this.maxPageSize - 1) / 2);
+        let pagesize = Math.min(this.maxPageSize, this.totalDirectorPages());
+        let offset = Math.trunc((pagesize - 1) / 2);
 
         let left = this.currentDirectorPage() - offset;
         let right = this.currentDirectorPage() + offset;
@@ -525,7 +533,7 @@ function ViewModel() {
 
         this.titleSearchResults([]);
         searchForTitles(latest, res => {
-            res = res.slice(0, NUMBER_RECORDS);
+            res = res.slice(0, this.titleRecordCount());
             res.forEach(val => this.titleDetailedInfo(val["Id"]));
         }, this);
     }, this);
@@ -538,7 +546,7 @@ function ViewModel() {
 
         this.actorSearchResults([]);
         searchForActors(latest, res => {
-            res = res.slice(0, NUMBER_RECORDS);
+            res = res.slice(0, this.actorRecordCount());
             res.forEach(val => this.actorDetailedInfo(val["Id"]));
         }, this);
     }, this);
@@ -551,7 +559,7 @@ function ViewModel() {
 
         this.countrySearchResults([]);
         searchForCountries(latest, res => {
-            res = res.slice(0, NUMBER_RECORDS);
+            res = res.slice(0, this.countryRecordCount());
             res.forEach(val => this.countryDetailedInfo(val["Id"]));
         }, this);
     }, this);
@@ -564,7 +572,7 @@ function ViewModel() {
 
         this.directorSearchResults([]);
         searchForDirectors(latest, res => {
-            res = res.slice(0, NUMBER_RECORDS);
+            res = res.slice(0, this.directorRecordCount());
             res.forEach(val => this.directorDetailedInfo(val["Id"]));
         }, this);
     }, this);
@@ -577,7 +585,7 @@ function ViewModel() {
 
         this.categorySearchResults([]);
         searchForCategories(latest, res => {
-            res = res.slice(0, NUMBER_RECORDS);
+            res = res.slice(0, this.categoryRecordCount());
             res.forEach(val => this.categoryDetailedInfo(val["Id"]));
         }, this);
     }, this);
