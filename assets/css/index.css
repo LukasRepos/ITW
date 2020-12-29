@@ -11,10 +11,9 @@
 
 .hero-container {
     width: 100%;
-    position: absolute;
+    padding: 10%;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 .hero-container .lead {
@@ -22,7 +21,7 @@
 }
 
 .title-bg {
-    background-image: url("../images/backgroundTitlePage.jpeg");
+    background-image: url("../images/brightBackground.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -55,27 +54,28 @@ body {
 }
 
 .actors-bg {
-    background-image: url("../images/backgroundActorsPage2.jpg");
+    background-image: url("../images/brightBackground.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
     background-position-y: bottom;
     margin-bottom: 0;
-    height: 100vw; /*Eu sei que isto parece estupido, mas e a unica coisa que funcionava*/
+    min-height: 100vh;
 }
 
 
 .countries-bg {
-    background-image: url("../images/backgroundCountriesPage.jpg");
+    background-image: url("../images/brightBackground.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
     background-position-y: bottom;
     margin-bottom: 0;
+    min-height: 100vh;
 }
 
 .ratings-bg {
-    background-image: url("../images/backgroundRatingsPage.jpg");
+    background-image: url("../images/brightBackground.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -85,7 +85,7 @@ body {
 }
 
 .directors-bg {
-    background-image: url("../images/backgroundDirectorsPage.jpg");
+    background-image: url("../images/brightBackground.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -95,7 +95,7 @@ body {
 }
 
 .categories-bg {
-    background-image: url("../images/backgroundCategoriesPage.jpg");
+    background-image: url("../images/brightBackground.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -105,7 +105,7 @@ body {
 }
 
 .search-bg {
-    background-image: url("../images/backgroundSearchPage.jpg");
+    background-image: url("../images/brightBackground.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
