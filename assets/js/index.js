@@ -6,6 +6,8 @@ function ViewModel() {
     this.maxPageSize = 11;
     let statisticsChart = null;
 
+    this.titleImageQuery = ko.observable();
+
     this.customSearchCountryVisible = ko.observable(false);
     this.customSearchCategoryVisible = ko.observable(false);
     this.customSearchActorVisible = ko.observable(false);
@@ -63,6 +65,9 @@ function ViewModel() {
         id: "",
         titles: []
     });
+
+    this.directorSearchResults = ko.observableArray();
+    this.directorQuery = ko.observable();
 
     this.countrySearchResults = ko.observableArray();
     this.countryQuery = ko.observable();
@@ -158,6 +163,12 @@ function ViewModel() {
     this.categoryDetailedInfo = id => {
         getCategoryByID(id, res => {
             this.categorySearchResults.push(this.formatAPICategoryResponse(res));
+        }, this);
+    }
+
+    this.directorDetailedInfo = id => {
+        getDirectorByID(id, res => {
+            this.directorSearchResults.push(this.formatAPIDirectorResponse(res));
         }, this);
     }
 
@@ -361,6 +372,20 @@ function ViewModel() {
     }
 
     this.showTitleModal = titleInfo => {
+        let baseURL = "https://source.unsplash.com/300x300/?";
+        let keywords = [];
+        const title = titleInfo.name.replace(/[^\w\s]/gi, '').trim();
+
+        keywords.push(title);
+        keywords = [...keywords, "movie", ...title.split(" ")];
+
+        if (title !== "") {
+            $("#titleImage").attr("src", baseURL + keywords.join(",")).show();
+            $("#titleTitle").show();
+        } else {
+            $("#titleImage").hide();
+            $("#titleTitle").hide();
+        }
         this.currentTitleInfo(titleInfo);
         $("#titleInfoModal").modal({
             backdrop: 'static',
@@ -534,6 +559,12 @@ function ViewModel() {
         titles: response["Titles"].map(title => ({id: title["Id"], name: title["Name"]}))
     })
 
+    this.formatAPIDirectorResponse = response => ({
+        id: response["Id"],
+        name: response["Name"],
+        titles: response["Titles"].map(title => ({id: title["Id"], name: title["Name"]}))
+    })
+
     this.titleQuery.subscribe(latest => {
         if (latest === "") {
             this.getTitlePage(this.currentTitlePage());
@@ -596,6 +627,19 @@ function ViewModel() {
         searchForCategories(latest, res => {
             res = res.slice(0, this.categoryRecordCount());
             res.forEach(val => this.categoryDetailedInfo(val["Id"]));
+        }, this);
+    }, this);
+
+    this.directorQuery.subscribe(latest => {
+        if (latest === "") {
+            // this.getActorPage(this.currentActorPage())
+            return;
+        }
+
+        this.directorSearchResults([]);
+        searchForDirectors(latest, res => {
+            res = res.slice(0, NUMBER_RECORDS);
+            res.forEach(val => this.directorDetailedInfo(val["Id"]));
         }, this);
     }, this);
 
