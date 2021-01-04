@@ -3,10 +3,8 @@ function ViewModel() {
     const PAGESIZE = 20;
     const CHARTID = "statisticsChart"
 
-    this.maxPageSize = 11;
+    this.maxPageSize = ko.observable(11);
     let statisticsChart = null;
-
-    this.titleImageQuery = ko.observable();
 
     this.customSearchCountryVisible = ko.observable(false);
     this.customSearchCategoryVisible = ko.observable(false);
@@ -24,7 +22,7 @@ function ViewModel() {
     this.customSearchActor = ko.observable("");
 
     this.currentTitlePage = ko.observable(1);
-    this.totalTitlePages = ko.observable(1); // REVERT: 1
+    this.totalTitlePages = ko.observable(1);
     this.titleSearchResults = ko.observableArray();
     this.titleQuery = ko.observable();
     this.titleRecordCount = ko.observable(NUMBER_RECORDS);
@@ -223,7 +221,7 @@ function ViewModel() {
 
     this.titlePaginationArray = () => {
         let list = [];
-        let pagesize = Math.min(this.maxPageSize, this.totalTitlePages());
+        let pagesize = Math.min(this.maxPageSize(), this.totalTitlePages());
         let offset = Math.trunc((pagesize - 1) / 2);
 
         let left = this.currentTitlePage() - offset;
@@ -241,7 +239,7 @@ function ViewModel() {
 
     this.actorPaginationArray = () => {
         let list = [];
-        let pagesize = Math.min(this.maxPageSize, this.totalActorPages());
+        let pagesize = Math.min(this.maxPageSize(), this.totalActorPages());
         let offset = Math.trunc((pagesize - 1) / 2);
 
         let left = this.currentActorPage() - offset;
@@ -259,7 +257,7 @@ function ViewModel() {
 
     this.countryPaginationArray = () => {
         let list = [];
-        let pagesize = Math.min(this.maxPageSize, this.totalCountryPages());
+        let pagesize = Math.min(this.maxPageSize(), this.totalCountryPages());
         let offset = Math.trunc((pagesize - 1) / 2);
 
         let left = this.currentCountryPage() - offset;
@@ -277,7 +275,7 @@ function ViewModel() {
 
     this.directorPaginationArray = () => {
         let list = [];
-        let pagesize = Math.min(this.maxPageSize, this.totalDirectorPages());
+        let pagesize = Math.min(this.maxPageSize(), this.totalDirectorPages());
         let offset = Math.trunc((pagesize - 1) / 2);
 
         let left = this.currentDirectorPage() - offset;
@@ -295,7 +293,7 @@ function ViewModel() {
 
     this.categoryPaginationArray = () => {
         let list = [];
-        let pagesize = Math.min(this.maxPageSize, this.totalCategoryPages());
+        let pagesize = Math.min(this.maxPageSize(), this.totalCategoryPages());
         let offset = Math.trunc((pagesize - 1) / 2);
 
         let left = this.currentCategoryPage() - offset;
@@ -758,6 +756,15 @@ function ViewModel() {
     this.getCategoryPage(1);
     this.fetchRatings();
     this.deserialize();
+    const vw = $(window).width();
+    console.log(this.maxPageSize);
+    this.maxPageSize(Math.trunc(vw / 60));
+    window.addEventListener('resize', ((event) => {
+        const vw = $(window).width();
+        console.log(this.maxPageSize);
+        this.maxPageSize(Math.trunc(vw / 60));
+    }).bind(this));
+    // this.calculatePaginationSize();
 }
 
 ko.applyBindings(new ViewModel());
