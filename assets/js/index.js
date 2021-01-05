@@ -756,15 +756,14 @@ function ViewModel() {
     this.getCategoryPage(1);
     this.fetchRatings();
     this.deserialize();
+
+    // window resizing algorithm
     const vw = $(window).width();
-    console.log(this.maxPageSize);
     this.maxPageSize(Math.trunc(vw / 60));
     window.addEventListener('resize', ((event) => {
         const vw = $(window).width();
-        console.log(this.maxPageSize);
         this.maxPageSize(Math.trunc(vw / 60));
     }).bind(this));
-    // this.calculatePaginationSize();
 }
 
 ko.applyBindings(new ViewModel());
