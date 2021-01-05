@@ -96,3 +96,7 @@ body {
     margin-bottom: 0;
     min-height: 100vh;
 }
+
+.dropdown-btn {
+    width: 10rem;
+}

@@ -15,6 +15,9 @@ function ViewModel() {
     this.customSearchCategoryError = ko.observable(false);
     this.customSearchActorError = ko.observable(false);
 
+    this.customSearchIsSearchingTitles = ko.observable(false);
+    this.customSearchNoResults = ko.observable(false);
+
     this.customSearchResults = ko.observableArray();
     this.customSearchTitle = ko.observable("");
     this.customSearchCountry = ko.observable("");
@@ -113,6 +116,13 @@ function ViewModel() {
         this.customSearchActorError(false);
 
         this.customSearchResults([]);
+        if (this.customSearchIsSearchingTitles())
+            this.customSearchForTitles();
+        else
+            this.customSearchForSeries();
+    }
+
+    this.customSearchForTitles = () => {
         searchForTitles(this.customSearchTitle(), res => {
             res.forEach(val => getTitleByID(val["Id"], title => {
                 let inCountries = title["Countries"].map(count => count["Name"]).includes(this.customSearchCountry());
@@ -133,6 +143,36 @@ function ViewModel() {
             }, this));
         }, this);
     }
+
+    this.customSearchForSeries = () => {
+        searchForSeries(this.customSearchTitle(), res => {
+            res.forEach(val => getTitleByID(val["Id"], title => {
+                let inCountries = title["Countries"].map(count => count["Name"]).includes(this.customSearchCountry());
+                let inCategories = title["Categories"].map(cat => cat["Name"]).includes(this.customSearchCategory());
+                let inActors = title["Actors"].map(act => act["Name"]).includes(this.customSearchActor());
+
+                let toAdd = true;
+
+                if (!inCountries && this.customSearchCountryVisible())
+                    toAdd = false;
+                if (!inCategories && this.customSearchCategoryVisible())
+                    toAdd = false;
+                if (!inActors && this.customSearchActorVisible())
+                    toAdd = false;
+
+                if (toAdd)
+                    this.customSearchResults.push(this.formatAPITitleResponse(title));
+            }, this));
+        }, this);
+    }
+
+    this.customSearchResults.subscribe(val => {
+        if (this.customSearchResults().length === 0) {
+            this.customSearchNoResults(true);
+        } else {
+            this.customSearchNoResults(false);
+        }
+    })
 
     this.titleDetailedInfo = id => {
         getTitleByID(id, res => {
@@ -746,6 +786,16 @@ function ViewModel() {
         }
 
         return res;
+    }
+
+    this.customSearchSwitchToTitles = () => {
+        $("#customSearchTitleDropdown").text("Filmes e Séries");
+        this.customSearchIsSearchingTitles(true);
+    }
+
+    this.customSearchSwitchToSeries = () => {
+        $("#customSearchTitleDropdown").text("Séries");
+        this.customSearchIsSearchingTitles(false);
     }
 
     // initialization

@@ -76,6 +76,12 @@ function searchForTitles(query, callback, context) {
     const data = {name: query};
     sendApiRequest(uri, callback.bind(context), data);
 }
+
+function searchForSeries(query, callback, context) {
+    const uri = "Search/Series";
+    const data = {name: query};
+    sendApiRequest(uri, callback.bind(context), data);
+}
 // endregion
 // region Statistics
 function getAPIStatistics(callback, context) {

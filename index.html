@@ -123,7 +123,8 @@
                     </ol>
                     <div class="carousel-inner" role="listbox">
                         <div class="carousel-item active img-fluid">
-                            <img class="w-100 caroussel-img" src="./assets/images/backgroundHomePage.jpeg" alt="First Image">
+                            <img class="w-100 caroussel-img" src="./assets/images/backgroundHomePage.jpeg"
+                                 alt="First Image">
                         </div>
                         <div class="carousel-item img-fluid">
                             <img class="w-100 caroussel-img" src="./assets/images/breakingBad.jpg" alt="Second Image">
@@ -205,36 +206,36 @@
                     </nav>
                     <table class="table table-striped table-sm small title-table">
                         <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Title</th>
-                                <th scope="col" class="text-right"></th>
-                            </tr>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Title</th>
+                            <th scope="col" class="text-right"></th>
+                        </tr>
                         </thead>
                         <tbody data-bind="foreach: titleSearchResults">
-                            <tr>
-                                <td data-bind="text: id"></td>
-                                <td data-bind="text: name"></td>
-                                <td class="text-right">
-                                    <button class="btn btn-sm" data-bind="click: $parent.showTitleModal">
-                                        <a class="btn btn-sm">
-                                            <i class="fa fa-eye" title="Selecione para ver detalhes"></i>
-                                        </a>
-                                    </button>
-                                    <!-- ko if: $parent.isBookmarked(id) -->
-                                    <button class="btn btn-sm" data-bind="click: $parent.removeBookmark">
-                                        <i class="fa fa-heart"
-                                           title="Remover dos favoritos"></i>
-                                    </button>
-                                    <!-- /ko -->
-                                    <!-- ko if: !$parent.isBookmarked(id) -->
-                                    <button class="btn btn-sm" data-bind="click: $parent.bookmarkMovie">
-                                        <i class="fa fa-heart-o"
-                                           title="Selecione para adicionar aos favoritos!"></i>
-                                    </button>
-                                    <!-- /ko -->
-                                </td>
-                            </tr>
+                        <tr>
+                            <td data-bind="text: id"></td>
+                            <td data-bind="text: name"></td>
+                            <td class="text-right">
+                                <button class="btn btn-sm" data-bind="click: $parent.showTitleModal">
+                                    <a class="btn btn-sm">
+                                        <i class="fa fa-eye" title="Selecione para ver detalhes"></i>
+                                    </a>
+                                </button>
+                                <!-- ko if: $parent.isBookmarked(id) -->
+                                <button class="btn btn-sm" data-bind="click: $parent.removeBookmark">
+                                    <i class="fa fa-heart"
+                                       title="Remover dos favoritos"></i>
+                                </button>
+                                <!-- /ko -->
+                                <!-- ko if: !$parent.isBookmarked(id) -->
+                                <button class="btn btn-sm" data-bind="click: $parent.bookmarkMovie">
+                                    <i class="fa fa-heart-o"
+                                       title="Selecione para adicionar aos favoritos!"></i>
+                                </button>
+                                <!-- /ko -->
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -302,24 +303,24 @@
                     </nav>
                     <table class="table table-striped table-sm small title-table">
                         <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Name</th>
-                                <th scope="col" class="text-right"></th>
-                            </tr>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col" class="text-right"></th>
+                        </tr>
                         </thead>
                         <tbody data-bind="foreach: actorSearchResults">
-                            <tr>
-                                <td data-bind="text: id"></td>
-                                <td data-bind="text: name"></td>
-                                <td class="text-right">
-                                    <button class="btn btn-sm" data-bind="click: $parent.showActorModal">
-                                        <a class="btn btn-sm">
-                                            <i class="fa fa-eye" title="Selecione para ver detalhes"></i>
-                                        </a>
-                                    </button>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td data-bind="text: id"></td>
+                            <td data-bind="text: name"></td>
+                            <td class="text-right">
+                                <button class="btn btn-sm" data-bind="click: $parent.showActorModal">
+                                    <a class="btn btn-sm">
+                                        <i class="fa fa-eye" title="Selecione para ver detalhes"></i>
+                                    </a>
+                                </button>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -387,24 +388,24 @@
                     </nav>
                     <table class="table table-striped table-sm small title-table">
                         <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Title</th>
-                                <th scope="col" class="text-right"></th>
-                            </tr>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Title</th>
+                            <th scope="col" class="text-right"></th>
+                        </tr>
                         </thead>
                         <tbody data-bind="foreach: countrySearchResults">
-                            <tr>
-                                <td data-bind="text: id"></td>
-                                <td data-bind="text: name"></td>
-                                <td class="text-right">
-                                    <button class="btn btn-sm" data-bind="click: $parent.showCountryModal">
-                                        <a class="btn btn-sm">
-                                            <i class="fa fa-eye" title="Selecione para ver detalhes"></i>
-                                        </a>
-                                    </button>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td data-bind="text: id"></td>
+                            <td data-bind="text: name"></td>
+                            <td class="text-right">
+                                <button class="btn btn-sm" data-bind="click: $parent.showCountryModal">
+                                    <a class="btn btn-sm">
+                                        <i class="fa fa-eye" title="Selecione para ver detalhes"></i>
+                                    </a>
+                                </button>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -418,24 +419,24 @@
                 <div class="container">
                     <table class="table table-striped table-sm small title-table">
                         <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Code</th>
-                                <th scope="col" class="text-right"></th>
-                            </tr>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Code</th>
+                            <th scope="col" class="text-right"></th>
+                        </tr>
                         </thead>
                         <tbody data-bind="foreach: ratings">
-                            <tr>
-                                <td data-bind="text: id"></td>
-                                <td data-bind="text: code"></td>
-                                <td class="text-right">
-                                    <button class="btn btn-sm" data-bind="click: $parent.showRatingModal">
-                                        <a class="btn btn-sm">
-                                            <i class="fa fa-eye" title="Selecione para ver detalhes"></i>
-                                        </a>
-                                    </button>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td data-bind="text: id"></td>
+                            <td data-bind="text: code"></td>
+                            <td class="text-right">
+                                <button class="btn btn-sm" data-bind="click: $parent.showRatingModal">
+                                    <a class="btn btn-sm">
+                                        <i class="fa fa-eye" title="Selecione para ver detalhes"></i>
+                                    </a>
+                                </button>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -503,24 +504,24 @@
                     </nav>
                     <table class="table table-striped table-sm small title-table">
                         <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Name</th>
-                                <th scope="col" class="text-right"></th>
-                            </tr>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col" class="text-right"></th>
+                        </tr>
                         </thead>
                         <tbody data-bind="foreach: directorSearchResults">
-                            <tr>
-                                <td data-bind="text: id"></td>
-                                <td data-bind="text: name"></td>
-                                <td class="text-right">
-                                    <button class="btn btn-sm" data-bind="click: $parent.showDirectorModal">
-                                        <a class="btn btn-sm">
-                                            <i class="fa fa-eye" title="Selecione para ver detalhes"></i>
-                                        </a>
-                                    </button>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td data-bind="text: id"></td>
+                            <td data-bind="text: name"></td>
+                            <td class="text-right">
+                                <button class="btn btn-sm" data-bind="click: $parent.showDirectorModal">
+                                    <a class="btn btn-sm">
+                                        <i class="fa fa-eye" title="Selecione para ver detalhes"></i>
+                                    </a>
+                                </button>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -588,24 +589,24 @@
                     </nav>
                     <table class="table table-striped table-sm small title-table">
                         <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Title</th>
-                                <th scope="col" class="text-right"></th>
-                            </tr>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Title</th>
+                            <th scope="col" class="text-right"></th>
+                        </tr>
                         </thead>
                         <tbody data-bind="foreach: categorySearchResults">
-                            <tr>
-                                <td data-bind="text: id"></td>
-                                <td data-bind="text: name"></td>
-                                <td class="text-right">
-                                    <button class="btn btn-sm" data-bind="click: $parent.showCategoryModal">
-                                        <a class="btn btn-sm">
-                                            <i class="fa fa-eye" title="Selecione para ver detalhes"></i>
-                                        </a>
-                                    </button>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td data-bind="text: id"></td>
+                            <td data-bind="text: name"></td>
+                            <td class="text-right">
+                                <button class="btn btn-sm" data-bind="click: $parent.showCategoryModal">
+                                    <a class="btn btn-sm">
+                                        <i class="fa fa-eye" title="Selecione para ver detalhes"></i>
+                                    </a>
+                                </button>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -620,29 +621,29 @@
                     <!-- ko if: bookmarkedTitles().length > 0 -->
                     <table class="table table-striped table-sm small title-table">
                         <thead>
-                            <tr class="row">
-                                <th scope="col" class="col-4">Nome</th>
-                                <th scope="col" class="col-6">Adicionado em</th>
-                                <th scope="col" class="col-2">Opções</th>
-                            </tr>
+                        <tr class="row">
+                            <th scope="col" class="col-4">Nome</th>
+                            <th scope="col" class="col-6">Adicionado em</th>
+                            <th scope="col" class="col-2">Opções</th>
+                        </tr>
                         </thead>
                         <tbody data-bind="foreach: bookmarkedTitles">
-                            <tr class="row">
-                                <td class="col-4" data-bind="text: name"></td>
-                                <td class="col-6" data-bind="text: dateBookmarked"></td>
-                                <td class="col-2 text-right row">
-                                    <button class="btn btn-sm col-sm-6" data-bind="click: $parent.showTitleModal">
-                                        <a class="btn btn-sm">
-                                            <i class="fa fa-eye" title="Selecione para ver detalhes"></i>
-                                        </a>
-                                    </button>
-                                    <button class="btn btn-sm col-sm-6" data-bind="click: $parent.removeBookmark">
-                                        <a class="btn btn-sm">
-                                            <i class="fa fa-trash" title="Remover dos favoritos"></i>
-                                        </a>
-                                    </button>
-                                </td>
-                            </tr>
+                        <tr class="row">
+                            <td class="col-4" data-bind="text: name"></td>
+                            <td class="col-6" data-bind="text: dateBookmarked"></td>
+                            <td class="col-2 text-right row">
+                                <button class="btn btn-sm col-sm-6" data-bind="click: $parent.showTitleModal">
+                                    <a class="btn btn-sm">
+                                        <i class="fa fa-eye" title="Selecione para ver detalhes"></i>
+                                    </a>
+                                </button>
+                                <button class="btn btn-sm col-sm-6" data-bind="click: $parent.removeBookmark">
+                                    <a class="btn btn-sm">
+                                        <i class="fa fa-trash" title="Remover dos favoritos"></i>
+                                    </a>
+                                </button>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                     <!-- /ko -->
@@ -658,27 +659,43 @@
     </div>
     <!-- Search -->
     <div class="tab-pane fade show" id="search" role="tabpanel" aria-labelledby="search-tab">
-        <main role="main">
+        <main class="mt-3" role="main">
             <div class="search-bg">
                 <div class="container">
                     <div class="form-group">
-                        <label for="TitleSearchBarCustom">Titulo</label>
-                        <input type="text" class="form-control" name="TitleSearchBarCustom" id="TitleSearchBarCustom"
-                               aria-describedby="SearchForTitle" placeholder="Título" data-bind="value: customSearchTitle">
-                        <p data-bind="visible: customSearchTitleError" class="text-danger">Insira um título!</p>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary dropdown-toggle rounded-0 dropdown-btn" type="button"
+                                        data-toggle="dropdown" id="customSearchTitleDropdown">Filmes e Séries
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" data-bind="click: customSearchSwitchToSeries()" href="#">Séries</a>
+                                    <a class="dropdown-item" data-bind="click: customSearchSwitchToTitles()" href="#">Filmes e Séries</a>
+                                </div>
+                            </div>
+                            <label for="TitleSearchBarCustom" hidden>Titulo</label>
+                            <input type="text" class="form-control" name="TitleSearchBarCustom"
+                                   id="TitleSearchBarCustom"
+                                   aria-describedby="SearchForTitle" placeholder="Título"
+                                   data-bind="value: customSearchTitle">
+                        </div>
                     </div>
+                    <p data-bind="visible: customSearchTitleError" class="text-danger">Insira um título!</p>
 
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input" data-bind="checked: customSearchCountryVisible">
+                            <input type="checkbox" class="form-check-input"
+                                   data-bind="checked: customSearchCountryVisible">
                             País
                         </label>
                     </div>
                     <div class="form-group" data-bind="hidden: !customSearchCountryVisible()">
                         <label for="CountrySearchBarCustom">País</label>
                         <input type="text" class="form-control" name="TitleSearchBarCustom" id="CountrySearchBarCustom"
-                               aria-describedby="SearchForTitle" placeholder="País" data-bind="value: customSearchCountry">
-                        <p data-bind="visible: customSearchCountryError" class="text-danger">Insira o nome de um país!</p>
+                               aria-describedby="SearchForTitle" placeholder="País"
+                               data-bind="value: customSearchCountry">
+                        <p data-bind="visible: customSearchCountryError" class="text-danger">Insira o nome de um
+                            país!</p>
                     </div>
 
                     <div class="form-check">
@@ -693,55 +710,59 @@
                         <input type="text" class="form-control" name="TitleSearchBarCustom" id="CategorySearchBarCustom"
                                aria-describedby="SearchForTitle" placeholder="Categoria"
                                data-bind="value: customSearchCategory">
-                        <p data-bind="visible: customSearchCategoryError" class="text-danger">Insira o nome de uma categoria!</p>
+                        <p data-bind="visible: customSearchCategoryError" class="text-danger">Insira o nome de uma
+                            categoria!</p>
                     </div>
 
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input" data-bind="checked: customSearchActorVisible">
+                            <input type="checkbox" class="form-check-input"
+                                   data-bind="checked: customSearchActorVisible">
                             Ator
                         </label>
                     </div>
                     <div class="form-group" data-bind="hidden: !customSearchActorVisible()">
                         <label for="ActorSearchBarCustom">Ator</label>
                         <input type="text" class="form-control" name="TitleSearchBarCustom" id="ActorSearchBarCustom"
-                               aria-describedby="SearchForTitle" placeholder="Ator" data-bind="value: customSearchActor">
+                               aria-describedby="SearchForTitle" placeholder="Ator"
+                               data-bind="value: customSearchActor">
                         <p data-bind="visible: customSearchActorError" class="text-danger">Insira o nome de um ator!</p>
                     </div>
                     <button class="btn btn-primary" data-bind="click: performSearch">Pesquisar</button>
+                    <p data-bind="visible: customSearchNoResults">Não foram encontrados resultados</p>
                     <!-- ko if: customSearchResults().length > 0 -->
                     <table class="table table-striped table-sm small title-table">
                         <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Title</th>
-                                <th scope="col" class="text-right"></th>
-                            </tr>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Title</th>
+                            <th scope="col" class="text-right"></th>
+                        </tr>
                         </thead>
                         <tbody data-bind="foreach: customSearchResults">
-                            <tr>
-                                <td data-bind="text: id"></td>
-                                <td data-bind="text: name"></td>
-                                <td class="text-right">
-                                    <button class="btn btn-sm" data-bind="click: $parent.showTitleModal">
-                                        <a class="btn btn-sm">
-                                            <i class="fa fa-eye" title="Selecione para ver detalhes"></i>
-                                        </a>
-                                    </button>
-                                    <!-- ko if: $parent.isBookmarked(id) -->
-                                    <button class="btn btn-sm" data-bind="click: $parent.removeBookmark">
-                                        <i class="fa fa-heart"
-                                           title="Remover dos favoritos"></i>
-                                    </button>
-                                    <!-- /ko -->
-                                    <!-- ko if: !$parent.isBookmarked(id) -->
-                                    <button class="btn btn-sm" data-bind="click: $parent.bookmarkMovie">
-                                        <i class="fa fa-heart-o"
-                                           title="Selecione para adicionar aos favoritos!"></i>
-                                    </button>
-                                    <!-- /ko -->
-                                </td>
-                            </tr>
+                        <tr>
+                            <td data-bind="text: id"></td>
+                            <td data-bind="text: name"></td>
+                            <td class="text-right">
+                                <button class="btn btn-sm" data-bind="click: $parent.showTitleModal">
+                                    <a class="btn btn-sm">
+                                        <i class="fa fa-eye" title="Selecione para ver detalhes"></i>
+                                    </a>
+                                </button>
+                                <!-- ko if: $parent.isBookmarked(id) -->
+                                <button class="btn btn-sm" data-bind="click: $parent.removeBookmark">
+                                    <i class="fa fa-heart"
+                                       title="Remover dos favoritos"></i>
+                                </button>
+                                <!-- /ko -->
+                                <!-- ko if: !$parent.isBookmarked(id) -->
+                                <button class="btn btn-sm" data-bind="click: $parent.bookmarkMovie">
+                                    <i class="fa fa-heart-o"
+                                       title="Selecione para adicionar aos favoritos!"></i>
+                                </button>
+                                <!-- /ko -->
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                     <!-- /ko -->
