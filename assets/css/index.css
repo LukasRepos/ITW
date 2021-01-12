@@ -101,3 +101,11 @@ body {
     width: 10rem;
     text-align: right;
 }
+
+.card-container {
+    object-fit: contain;
+}
+
+.card-image {
+    align-self: center;
+}

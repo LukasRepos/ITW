@@ -1,6 +1,6 @@
 function ViewModel() {
-    const NUMBER_RECORDS = 20;
-    const PAGESIZE = 20;
+    const NUMBER_RECORDS = 21;
+    const PAGESIZE = 21;
     const CHARTID = "statisticsChart"
 
     this.maxPageSize = ko.observable(11);
@@ -459,7 +459,7 @@ function ViewModel() {
     }
 
     this.bookmarkMovie = titleInfo => {
-        this.bookmarkedTitles.push({...titleInfo, dateBookmarked: new Date().toDateString()});
+        this.bookmarkedTitles.push({...titleInfo, dateBookmarked: new Date().toLocaleDateString()});
     }
 
     this.isBookmarked = id => {
@@ -793,13 +793,9 @@ function ViewModel() {
     }
 
     this.getUrl = title => {
-        //console.log(this.titleImageUrls());
-        console.log(title["id"].toString());
-        if (this.titleImageUrls() && this.titleImageUrls()[title["id"].toString()]) {
-            console.log(this.titleImageUrls()[title["id"].toString()]);
+        if (this.titleImageUrls() && this.titleImageUrls()[title["id"].toString()])
             return this.titleImageUrls()[title["id"].toString()];
-        }
-        return "Hi"
+        return "./assets/images/NotFound.png"
     }
 
     // initialization
