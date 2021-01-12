@@ -411,20 +411,6 @@ function ViewModel() {
     }
 
     this.showTitleModal = titleInfo => {
-        let baseURL = "https://source.unsplash.com/300x300/?";
-        let keywords = [];
-        const title = titleInfo.name.replace(/[^\w\s]/gi, '').trim();
-
-        keywords.push(title);
-        keywords = [...keywords, "movie", ...title.split(" ")];
-
-        if (title !== "") {
-            $("#titleImage").attr("src", baseURL + keywords.join(",")).show();
-            $("#titleTitle").show();
-        } else {
-            $("#titleImage").hide();
-            $("#titleTitle").hide();
-        }
         this.currentTitleInfo(titleInfo);
         $("#titleInfoModal").modal({
             backdrop: 'static',
@@ -545,26 +531,29 @@ function ViewModel() {
         $("#categoryInfoModal").modal("hide");
     }
 
-    this.formatAPITitleResponse = response => ({
-        actors: response["Actors"].map(val => ({id: val["Id"], name: val["Name"]})),
-        categories: response["Categories"].map(val => ({id: val["Id"], name: val["Name"]})),
-        countries: response["Countries"].map(val => ({id: val["Id"], name: val["Name"]})),
-        directors: response["Directors"].map(val => ({id: val["Id"], name: val["Name"]})),
-        name: response["Name"],
-        added: response["DateAdded"],
-        description: response["Description"],
-        duration: response["Duration"],
-        id: response["Id"],
-        rating: response["Rating"] ? {
-            id: response["Rating"]["Id"],
-            code: response["Rating"]["Code"]
-        } : null,
-        yearOfRelease: response["ReleaseYear"],
-        type: {
-            id: response["Type"]["Id"],
-            name: response["Type"]["Name"]
+    this.formatAPITitleResponse = response => {
+        let date = new Date(response["DateAdded"])
+        return {
+            actors: response["Actors"].map(val => ({id: val["Id"], name: val["Name"]})),
+            categories: response["Categories"].map(val => ({id: val["Id"], name: val["Name"]})),
+            countries: response["Countries"].map(val => ({id: val["Id"], name: val["Name"]})),
+            directors: response["Directors"].map(val => ({id: val["Id"], name: val["Name"]})),
+            name: response["Name"],
+            added: date.toLocaleDateString(),
+            description: response["Description"],
+            duration: response["Duration"],
+            id: response["Id"],
+            rating: response["Rating"] ? {
+                id: response["Rating"]["Id"],
+                code: response["Rating"]["Code"]
+            } : null,
+            yearOfRelease: response["ReleaseYear"],
+            type: {
+                id: response["Type"]["Id"],
+                name: response["Type"]["Name"]
+            }
         }
-    })
+    }
 
     this.formatAPIActorResponse = response => ({
         name: response["Name"],
