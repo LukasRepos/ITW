@@ -15,6 +15,8 @@ function ViewModel() {
     this.customSearchCategoryError = ko.observable(false);
     this.customSearchActorError = ko.observable(false);
 
+    this.customSearchValidated = ko.observable(false);
+
     this.customSearchIsSearchingTitles = ko.observable(false);
     this.customSearchNoResults = ko.observable(false);
 
@@ -105,7 +107,8 @@ function ViewModel() {
     this.statisticsOptions = ko.observable();
 
     this.performSearch = () => {
-        if (!this.validateSearch()) {
+        this.customSearchValidated(this.validateSearch());
+        if (!this.customSearchValidated()) {
             this.customSearchResults([]);
             return;
         }
@@ -168,7 +171,7 @@ function ViewModel() {
     }
 
     this.customSearchResults.subscribe(val => {
-        if (this.customSearchResults().length === 0) {
+        if (this.customSearchResults().length === 0 && this.customSearchValidated()) {
             this.customSearchNoResults(true);
         } else {
             this.customSearchNoResults(false);
@@ -758,21 +761,29 @@ function ViewModel() {
         if (this.customSearchTitle().trim().length === 0) {
             res = false;
             this.customSearchTitleError(true);
+        } else {
+            this.customSearchTitleError(false);
         }
 
         if (this.customSearchCountryVisible() && this.customSearchCountry().trim().length === 0) {
             res = false;
             this.customSearchCountryError(true);
+        } else {
+            this.customSearchCountryError(false);
         }
 
         if (this.customSearchCategoryVisible() && this.customSearchCategory().trim().length === 0) {
             res = false;
             this.customSearchCategoryError(true);
+        } else {
+            this.customSearchCategoryError(false);
         }
 
         if (this.customSearchActorVisible() && this.customSearchActor().trim().length === 0) {
             res = false;
             this.customSearchActorError(true);
+        } else {
+            this.customSearchActorError(false);
         }
 
         return res;

@@ -105,7 +105,3 @@ body {
 .card-container {
     object-fit: contain;
 }
-
-.card-image {
-    align-self: center;
-}
