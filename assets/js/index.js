@@ -26,6 +26,7 @@ function ViewModel() {
 
     this.currentTitlePage = ko.observable(1);
     this.totalTitlePages = ko.observable(1);
+    this.titleImageUrls = ko.observable();
     this.titleSearchResults = ko.observableArray();
     this.titleQuery = ko.observable();
     this.titleRecordCount = ko.observable(NUMBER_RECORDS);
@@ -798,6 +799,20 @@ function ViewModel() {
         this.customSearchIsSearchingTitles(false);
     }
 
+    this.loadImages = function (res) {
+        this.titleImageUrls(res);
+    }
+
+    this.getUrl = title => {
+        //console.log(this.titleImageUrls());
+        console.log(title["id"].toString());
+        if (this.titleImageUrls() && this.titleImageUrls()[title["id"].toString()]) {
+            console.log(this.titleImageUrls()[title["id"].toString()]);
+            return this.titleImageUrls()[title["id"].toString()];
+        }
+        return "Hi"
+    }
+
     // initialization
     this.getTitlePage(1);
     this.getActorPage(1);
@@ -806,6 +821,7 @@ function ViewModel() {
     this.getCategoryPage(1);
     this.fetchRatings();
     this.deserialize();
+    loadImageUrls(this.loadImages, this);
 
     // window resizing algorithm
     const vw = $(window).width();

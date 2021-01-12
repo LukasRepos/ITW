@@ -15,6 +15,15 @@ function sendApiRequest(uri, callback, data={}) {
     });
 }
 
+// region Get image url
+function loadImageUrls(callback, context) {
+    $.ajax({
+        url: "./assets/resources/urls.json",
+        success: callback.bind(context)
+    });
+}
+// endregion
+
 // region Get by ID
 function getActorByID(id, callback, context) {
     const uri = `Actors/${id}`;
