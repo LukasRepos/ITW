@@ -6,6 +6,9 @@ function ViewModel() {
     this.maxPageSize = ko.observable(11);
     let statisticsChart = null;
 
+    this.test = ko.observableArray();
+    this.test.subscribe(val => console.log(val));
+
     this.customSearchCountryVisible = ko.observable(false);
     this.customSearchCategoryVisible = ko.observable(false);
     this.customSearchActorVisible = ko.observable(false);
