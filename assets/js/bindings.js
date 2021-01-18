@@ -1,11 +1,41 @@
 ko.bindingHandlers.autocomplete = {
     init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-        let selectedObservableArrayInViewModel = valueAccessor();
+        let data = valueAccessor();
 
-        $("#TitleSearchBar").autocomplete({
+        $("#" + data.target).autocomplete({
             minLength: 2,
             source: (request, response) => {
-                searchForTitles(request.term, res => {
+                let searchFunc = undefined;
+
+                switch (data.type) {
+                    case "Titles": {
+                        searchFunc = searchForTitles;
+                        break;
+                    }
+                    case "Actors": {
+                        searchFunc = searchForActors;
+                        break;
+                    }
+                    case "Countries": {
+                        searchFunc = searchForCountries;
+                        break;
+                    }
+                    case "Directors": {
+                        searchFunc = searchForDirectors;
+                        break;
+                    }
+                    case "Categories": {
+                        searchFunc = searchForCategories;
+                        break;
+                    }
+                }
+
+                if (searchFunc === undefined) {
+                    console.error("Undefined type in autocomplete")
+                    return;
+                }
+
+                searchFunc(request.term, res => {
                     res = res.slice(0, 5);
                     let result = [];
 
@@ -20,28 +50,44 @@ ko.bindingHandlers.autocomplete = {
                 }, this);
             },
             select: (item, ui) => {
-                getTitleByID(ui.item.data["Id"], response => {
-                    let date = new Date(response["DateAdded"])
-                    selectedObservableArrayInViewModel([{
-                        actors: response["Actors"].map(val => ({id: val["Id"], name: val["Name"]})),
-                        categories: response["Categories"].map(val => ({id: val["Id"], name: val["Name"]})),
-                        countries: response["Countries"].map(val => ({id: val["Id"], name: val["Name"]})),
-                        directors: response["Directors"].map(val => ({id: val["Id"], name: val["Name"]})),
-                        name: response["Name"],
-                        added: date.toLocaleDateString(),
-                        description: response["Description"],
-                        duration: response["Duration"],
-                        id: response["Id"],
-                        rating: response["Rating"] ? {
-                            id: response["Rating"]["Id"],
-                            code: response["Rating"]["Code"]
-                        } : null,
-                        yearOfRelease: response["ReleaseYear"],
-                        type: {
-                            id: response["Type"]["Id"],
-                            name: response["Type"]["Name"]
-                        }
-                    }]);
+                let getFunc = undefined;
+                let formatter = undefined;
+
+                switch (data.type) {
+                    case "Titles": {
+                        getFunc = getTitleByID;
+                        formatter = formatAPITitleResponse;
+                        break;
+                    }
+                    case "Actors": {
+                        getFunc = getActorByID;
+                        formatter = formatAPIActorResponse;
+                        break;
+                    }
+                    case "Countries": {
+                        getFunc = getCountryByID;
+                        formatter = formatAPICountryResponse;
+                        break;
+                    }
+                    case "Directors": {
+                        getFunc = getDirectorByID;
+                        formatter = formatAPIDirectorResponse;
+                        break;
+                    }
+                    case "Categories": {
+                        getFunc = getCategoryByID;
+                        formatter = formatAPICategoryResponse;
+                        break;
+                    }
+                }
+
+                if (getFunc === undefined || formatter === undefined) {
+                    console.error("Undefined type in autocomplete")
+                    return;
+                }
+
+                getFunc(ui.item.data["Id"], response => {
+                    data.obs([formatter(response)]);
                 }, this);
             }
         });

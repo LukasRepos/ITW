@@ -156,7 +156,7 @@
                         <label for="TitleSearchBar">Pesquisa</label>
                         <input type="text" class="form-control" name="TitleSearchBar" id="TitleSearchBar"
                                aria-describedby="SearchTitle" placeholder="Titulo"
-                               data-bind="autocomplete: titleSearchResults, value: titleQuery, valueUpdate: 'keyup'">
+                               data-bind="autocomplete: {obs: titleSearchResults, target: 'TitleSearchBar', type: 'Titles'}, value: titleQuery, valueUpdate: 'keyup'">
                     </div>
                     <nav class=pagination-container aria-label="Title navigation">
                         <ul class="pagination">
@@ -266,7 +266,7 @@
                         <label for="ActorSearchBar">Pesquisa</label>
                         <input type="text" class="form-control" name="ActorSearchBar" id="ActorSearchBar"
                                aria-describedby="SearchActor" placeholder="Ator"
-                               data-bind="value: actorQuery, valueUpdate: 'keyup'">
+                               data-bind="autocomplete: {obs: actorSearchResults, target: 'ActorSearchBar', type: 'Actors'}, value: actorQuery, valueUpdate: 'keyup'">
                     </div>
                     <nav class=pagination-container aria-label="Actor navigation">
                         <ul class="pagination">
@@ -351,7 +351,7 @@
                         <label for="CountrySearchBar">Pesquisa</label>
                         <input type="text" class="form-control" name="CountrySearchBar" id="CountrySearchBar"
                                aria-describedby="SearchCountry" placeholder="País"
-                               data-bind="value: countryQuery, valueUpdate: 'keyup'">
+                               data-bind="autocomplete: {obs: countrySearchResults, target: 'CountrySearchBar', type: 'Countries'}, value: countryQuery, valueUpdate: 'keyup'">
                     </div>
                     <nav class=pagination-container aria-label="Country navigation">
                         <ul class="pagination">
@@ -467,7 +467,7 @@
                         <label for="DirectorSearchBar">Pesquisa</label>
                         <input type="text" class="form-control" name="DirectorSearchBar" id="DirectorSearchBar"
                                aria-describedby="SearchDirector" placeholder="Diretor"
-                               data-bind="value: directorQuery, valueUpdate: 'keyup'">
+                               data-bind="autocomplete: {obs: directorSearchResults, target: 'DirectorSearchBar', type: 'Directors'}, value: directorQuery, valueUpdate: 'keyup'">
                     </div>
                     <nav class=pagination-container aria-label="Directors navigation">
                         <ul class="pagination">
@@ -552,7 +552,7 @@
                         <label for="CategorySearchBar">Pesquisa</label>
                         <input type="text" class="form-control" name="CategorySearchBar" id="CategorySearchBar"
                                aria-describedby="SearchCategory" placeholder="Categoria"
-                               data-bind="value: categoryQuery, valueUpdate: 'keyup'">
+                               data-bind="autocomplete: {obs: categorySearchResults, target: 'CategorySearchBar', type: 'Categories'}, value: categoryQuery, valueUpdate: 'keyup'">
                     </div>
                     <nav class=pagination-container aria-label="Category navigation">
                         <ul class="pagination">
@@ -944,6 +944,7 @@
                                         <a data-bind="text: name"></a>
                                         (<span data-bind="text: id"></span>)
                                     </button>
+                                    <br>
                                 </div>
                                 <!-- /ko -->
                                 <!-- ko if: currentTitleInfo().directors.length == 0 -->
@@ -1211,7 +1212,8 @@
                         <div class="card-header" id="TitlesByCountryHeader">
                             <h2 class="mb-0">
                                 <button class="btn btn-link btn-block text-left collapsed" type="button"
-                                        data-toggle="collapse" data-target="#titlesByCountryAccordion" aria-expanded="false"
+                                        data-toggle="collapse" data-target="#titlesByCountryAccordion"
+                                        aria-expanded="false"
                                         aria-controls="titlesByCountry">
                                     Filmes realizados
                                 </button>
@@ -1266,7 +1268,8 @@
                         <div class="card-header" id="TitlesByDirectorHeader">
                             <h2 class="mb-0">
                                 <button class="btn btn-link btn-block text-left collapsed" type="button"
-                                        data-toggle="collapse" data-target="#titlesByDirectorAccordion" aria-expanded="false"
+                                        data-toggle="collapse" data-target="#titlesByDirectorAccordion"
+                                        aria-expanded="false"
                                         aria-controls="titlesByDirector">
                                     Filmes realizados
                                 </button>
@@ -1316,30 +1319,42 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table class="table table-striped table-sm small">
-                    <tr class="row">
-                        <th class="col-md-3">Filmes classificados</th>
-                        <td class="col-md-9">
-                            <!-- ko if: currentCategoryInfo().titles.length > 0 -->
-                            <!-- ko foreach: currentCategoryInfo().titles.slice(0, 10) -->
-                            <button type="button" class="btn btn-sm" data-bind="click: $parent.switchToTitleInfo">
+                <div class="accordion" id="modalAccordionCategories">
+                    <div class="card">
+                        <div class="card-header" id="TitlesByCategoryHeader">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                        data-toggle="collapse" data-target="#titlesByCategoryAccordion"
+                                        aria-expanded="false"
+                                        aria-controls="titlesByCategory">
+                                    Filmes realizados
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="titlesByCategoryAccordion" class="collapse" aria-labelledby="titlesByCategory"
+                             data-parent="#modalAccordionDirectors">
+                            <div class="card-body">
+                                <!-- ko if: currentCategoryInfo().titles.length > 0 -->
+                                <!-- ko foreach: currentCategoryInfo().titles.slice(0, 10) -->
+                                <button type="button" class="btn btn-sm" data-bind="click: $parent.switchToTitleInfo">
+                                    <i class="fa fa-video-camera"></i>
+                                    <a data-bind="text: name"></a>
+                                    (<span data-bind="text: id"></span>)
+                                </button>
+                                <br>
+                                <!-- /ko -->
+                                <!-- ko if: currentCategoryInfo().titles.length > 10 -->
+                                <p>Entre outros</p>
+                                <!-- /ko -->
+                                <!-- /ko -->
+                                <!-- ko if: currentCategoryInfo().titles.length == 0 -->
                                 <i class="fa fa-video-camera"></i>
-                                <a data-bind="text: name"></a>
-                                (<span data-bind="text: id"></span>)
-                            </button>
-                            <br>
-                            <!-- /ko -->
-                            <!-- ko if: currentCategoryInfo().titles.length > 10 -->
-                            <p>Entre outros</p>
-                            <!-- /ko -->
-                            <!-- /ko -->
-                            <!-- ko if: currentCategoryInfo().titles.length == 0 -->
-                            <i class="fa fa-video-camera"></i>
-                            <a>Sem informação disponível para mostrar</a>
-                            <!-- /ko -->
-                        </td>
-                    </tr>
-                </table>
+                                <a>Sem informação disponível para mostrar</a>
+                                <!-- /ko -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -1374,6 +1389,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.bundle.min.js"
         integrity="sha256-eA+ych7t31OjiXs3fYU0iWjn9HvXMiCLmunP2Gpghok=" crossorigin="anonymous"></script>
 <!-- Custom scripts -->
+<script src="./assets/js/formatter.js"></script>
 <script src="./assets/js/requests.js"></script>
 <script src="./assets/js/charts.js"></script>
 <script src="./assets/js/bindings.js"></script>

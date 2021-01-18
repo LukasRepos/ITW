@@ -146,7 +146,7 @@ function ViewModel() {
                     toAdd = false;
 
                 if (toAdd)
-                    this.customSearchResults.push(this.formatAPITitleResponse(title));
+                    this.customSearchResults.push(formatAPITitleResponse(title));
             }, this));
         }, this);
     }
@@ -168,7 +168,7 @@ function ViewModel() {
                     toAdd = false;
 
                 if (toAdd)
-                    this.customSearchResults.push(this.formatAPITitleResponse(title));
+                    this.customSearchResults.push(formatAPITitleResponse(title));
             }, this));
         }, this);
     }
@@ -183,37 +183,37 @@ function ViewModel() {
 
     this.titleDetailedInfo = id => {
         getTitleByID(id, res => {
-            this.titleSearchResults.push(this.formatAPITitleResponse(res));
+            this.titleSearchResults.push(formatAPITitleResponse(res));
         }, this);
     }
 
     this.actorDetailedInfo = id => {
         getActorByID(id, res => {
-            this.actorSearchResults.push(this.formatAPIActorResponse(res));
+            this.actorSearchResults.push(formatAPIActorResponse(res));
         }, this);
     }
 
     this.countryDetailedInfo = id => {
         getCountryByID(id, res => {
-            this.countrySearchResults.push(this.formatAPICountryResponse(res));
+            this.countrySearchResults.push(formatAPICountryResponse(res));
         }, this);
     }
 
     this.directorDetailedInfo = id => {
         getDirectorByID(id, res => {
-            this.directorSearchResults.push(this.formatAPIDirectorResponse(res));
+            this.directorSearchResults.push(formatAPIDirectorResponse(res));
         }, this);
     }
 
     this.categoryDetailedInfo = id => {
         getCategoryByID(id, res => {
-            this.categorySearchResults.push(this.formatAPICategoryResponse(res));
+            this.categorySearchResults.push(formatAPICategoryResponse(res));
         }, this);
     }
 
     this.directorDetailedInfo = id => {
         getDirectorByID(id, res => {
-            this.directorSearchResults.push(this.formatAPIDirectorResponse(res));
+            this.directorSearchResults.push(formatAPIDirectorResponse(res));
         }, this);
     }
 
@@ -261,7 +261,7 @@ function ViewModel() {
         this.ratings([]);
         getRatings(res => {
             res.forEach(val => getRatingByID(val["Id"], rating => {
-                this.ratings.push(this.formatAPIRatingResponse(rating));
+                this.ratings.push(formatAPIRatingResponse(rating));
             }, this));
         }, this);
     }
@@ -489,42 +489,42 @@ function ViewModel() {
     this.switchToTitleInfo = title => {
         this.closeAllModals();
         getTitleByID(title["id"], res => {
-            this.showTitleModal(this.formatAPITitleResponse(res));
+            this.showTitleModal(formatAPITitleResponse(res));
         }, this);
     }
 
     this.switchToActorInfo = actor => {
         this.closeAllModals();
         getActorByID(actor["id"], res => {
-            this.showActorModal(this.formatAPIActorResponse(res));
+            this.showActorModal(formatAPIActorResponse(res));
         }, this);
     }
 
     this.switchToCountryInfo = country => {
         this.closeAllModals();
         getCountryByID(country["id"], res => {
-            this.showCountryModal(this.formatAPICountryResponse(res));
+            this.showCountryModal(formatAPICountryResponse(res));
         }, this);
     }
 
     this.switchToRatingInfo = rating => {
         this.closeAllModals();
         getRatingByID(rating["id"], res => {
-            this.showRatingModal(this.formatAPIRatingResponse(res));
+            this.showRatingModal(formatAPIRatingResponse(res));
         }, this);
     }
 
     this.switchToDirectorInfo = country => {
         this.closeAllModals();
         getDirectorByID(country["id"], res => {
-            this.showDirectorModal(this.formatAPIDirectorResponse(res));
+            this.showDirectorModal(formatAPIDirectorResponse(res));
         }, this);
     }
 
     this.switchToCategoryInfo = category => {
         this.closeAllModals();
         getCategoryByID(category["id"], res => {
-            this.showCategoryModal(this.formatAPICategoryResponse(res));
+            this.showCategoryModal(formatAPICategoryResponse(res));
         }, this);
     }
 
@@ -536,68 +536,6 @@ function ViewModel() {
         $("#directorInfoModal").modal("hide");
         $("#categoryInfoModal").modal("hide");
     }
-
-    this.formatAPITitleResponse = response => {
-        let date = new Date(response["DateAdded"])
-        return {
-            actors: response["Actors"].map(val => ({id: val["Id"], name: val["Name"]})),
-            categories: response["Categories"].map(val => ({id: val["Id"], name: val["Name"]})),
-            countries: response["Countries"].map(val => ({id: val["Id"], name: val["Name"]})),
-            directors: response["Directors"].map(val => ({id: val["Id"], name: val["Name"]})),
-            name: response["Name"],
-            added: date.toLocaleDateString(),
-            description: response["Description"],
-            duration: response["Duration"],
-            id: response["Id"],
-            rating: response["Rating"] ? {
-                id: response["Rating"]["Id"],
-                code: response["Rating"]["Code"]
-            } : null,
-            yearOfRelease: response["ReleaseYear"],
-            type: {
-                id: response["Type"]["Id"],
-                name: response["Type"]["Name"]
-            }
-        }
-    }
-
-    this.formatAPIActorResponse = response => ({
-        name: response["Name"],
-        id: response["Id"],
-        titles: response["Titles"].map(val => ({name: val["Name"], id: val["Id"]}))
-    })
-
-    this.formatAPICountryResponse = response => ({
-        name: response["Name"],
-        id: response["Id"],
-        titles: response["Titles"].map(val => ({name: val["Name"], id: val["Id"]}))
-    })
-
-    this.formatAPIRatingResponse = response => ({
-        id: response["Id"],
-        code: response["Code"],
-        "class": response["Classe"],
-        desc: response["Description"],
-        titles: response["Titles"].map(title => ({id: title["Id"], name: title["Name"]}))
-    })
-
-    this.formatAPIDirectorResponse = response => ({
-        id: response["Id"],
-        name: response["Name"],
-        titles: response["Titles"].map(title => ({id: title["Id"], name: title["Name"]}))
-    })
-
-    this.formatAPICategoryResponse = response => ({
-        id: response["Id"],
-        name: response["Name"],
-        titles: response["Titles"].map(title => ({id: title["Id"], name: title["Name"]}))
-    })
-
-    this.formatAPIDirectorResponse = response => ({
-        id: response["Id"],
-        name: response["Name"],
-        titles: response["Titles"].map(title => ({id: title["Id"], name: title["Name"]}))
-    })
 
     this.titleQuery.subscribe(latest => {
         if (latest === "") {
