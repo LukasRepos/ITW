@@ -829,6 +829,13 @@ function ViewModel() {
         const vw = $(window).width();
         this.maxPageSize(Math.trunc(vw / 60));
     }).bind(this));
+
+    // bootstrap hack to get modals to work
+    $('body').on('hidden.bs.modal', function () {
+        if ($('.modal.show').length > 0) {
+            $('body').addClass('modal-open');
+        }
+    });
 }
 
 ko.applyBindings(new ViewModel());

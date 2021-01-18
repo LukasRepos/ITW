@@ -1,5 +1,5 @@
 ﻿<!doctype html>
-<html lang="en">
+<html lang="pt-pt">
 
 <head>
     <title>Netflix</title>
@@ -211,10 +211,11 @@
                     <div class="container">
                         <div class="row">
                             <!-- ko foreach: titleSearchResults() -->
-                            <div class="col-md-4 col-sm-6 col-lg-3 col-12 col-xl-3">
+                            <div class="col">
                                 <div class="card mb-4 shadow-sm">
-                                    <div class="card-container bd-placeholder-img card-img-top d-flex justify-content-center" style="margin: 5px 0 0 0">
-                                        <img class="" height="225" width="200"  src="" alt="Image not found"
+                                    <div class="card-container bd-placeholder-img card-img-top d-flex justify-content-center"
+                                         style="margin: 5px 0 0 0">
+                                        <img class="" height="225" width="200" src="" alt="Image not found"
                                              data-bind="attr: {src: $parent.getUrl($data)}">
                                     </div>
                                     <div class="card-body">
@@ -820,119 +821,231 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table class="table table-striped table-sm small">
-                    <tr class="row">
-                        <th class="col-md-3">Atores</th>
-                        <td class="col-md-9">
-                            <!-- ko if: currentTitleInfo().actors.length > 0 -->
-                            <!-- ko foreach: currentTitleInfo().actors -->
-                            <button type="button" class="btn btn-sm" data-bind="click: $parent.switchToActorInfo">
-                                <i class="fa fa-user-o"></i>
-                                <a data-bind="text: name"></a>
-                                (<span data-bind="text: id"></span>)
-                            </button>
-                            <br>
-                            <!-- /ko -->
-                            <!-- /ko -->
-                            <!-- ko if: currentTitleInfo().actors.length == 0 -->
-                            <i class="fa fa-user-o"></i>
-                            <a>Sem informação disponível para mostrar</a>
-                            <!-- /ko -->
-                        </td>
-                    </tr>
-                    <tr class="row">
-                        <th class="col-md-3">Categorias</th>
-                        <td class="col-md-9">
-                            <div data-bind="foreach: currentTitleInfo().categories">
-                                <button class="btn btn-sm" data-bind="click: $parent.switchToCategoryInfo">
-                                    <i class="fa fa-bookmark-o"></i>
-                                    <a data-bind="text: name"></a>
-                                    (<span data-bind="text: id"></span>)
+                <p data-bind="text: currentTitleInfo().description"></p>
+                <div class="accordion" id="modalAccordionTitle">
+                    <div class="card">
+                        <div class="card-header" id="actorHeading">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                                        data-target="#actorAccordion" aria-expanded="true" aria-controls="actor">
+                                    Atores
                                 </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="row">
-                        <th class="col-md-3">Países de lançamento</th>
-                        <td class="col-md-9">
-                            <div data-bind="foreach: currentTitleInfo().countries">
-                                <button class="btn btn-sm" data-bind="click: $parent.switchToCountryInfo">
-                                    <i class="fa fa-flag-o"></i>
-                                    <a data-bind="text: name"></a>
-                                    (<span data-bind="text: id"></span>)
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="row">
-                        <th class="col-md-3">Breve descrição</th>
-                        <td class="col-md-9" data-bind="text: currentTitleInfo().description"></td>
-                    </tr>
-                    <tr class="row">
-                        <th class="col-md-3">Data adicionada</th>
-                        <!-- ko if: currentTitleInfo().added != null -->
-                        <td class="col-md-9" data-bind="text: currentTitleInfo().added"></td>
-                        <!-- /ko -->
-                        <!-- ko if: currentTitleInfo().added == null -->
-                        <td class="col-md-9">Sem data adicionada</td>
-                        <!-- /ko -->
-                    </tr>
-                    <tr class="row">
-                        <th class="col-md-3">Diretores</th>
-                        <td class="col-md-9">
-                            <!-- ko if: currentTitleInfo().directors.length > 0 -->
-                            <div data-bind="foreach: currentTitleInfo().directors">
-                                <button class="btn btn-sm" data-bind="click: $parent.switchToDirectorInfo">
+                            </h2>
+                        </div>
+                        <div id="actorAccordion" class="collapse" aria-labelledby="actor"
+                             data-parent="#modalAccordionTitle">
+                            <div class="card-body">
+                                <!-- ko if: currentTitleInfo().actors.length > 0 -->
+                                <!-- ko foreach: currentTitleInfo().actors -->
+                                <button type="button" class="btn btn-sm" data-bind="click: $parent.switchToActorInfo">
                                     <i class="fa fa-user-o"></i>
                                     <a data-bind="text: name"></a>
                                     (<span data-bind="text: id"></span>)
                                 </button>
+                                <br>
+                                <!-- /ko -->
+                                <!-- /ko -->
+                                <!-- ko if: currentTitleInfo().actors.length == 0 -->
+                                <i class="fa fa-user-o"></i>
+                                <a>Sem informação disponível para mostrar</a>
+                                <!-- /ko -->
                             </div>
-                            <!-- /ko -->
-                            <!-- ko if: currentTitleInfo().directors.length == 0 -->
-                            <i class="fa fa-user-o"></i>
-                            <a>Sem informação para mostrar</a>
-                            <!-- /ko -->
-                        </td>
-                    </tr>
-                    <tr class="row">
-                        <th class="col-md-3">Duração</th>
-                        <td class="col-md-9" data-bind="text: currentTitleInfo().duration"></td>
-                    </tr>
-                    <tr class="row">
-                        <th class="col-md-3">Classificação</th>
-                        <td class="col-md-9">
-                            <!-- ko if: currentTitleInfo().rating != null -->
-                            <!-- ko with: currentTitleInfo().rating -->
-                            <button type="button" class="btn btn-sm" data-bind="click: $parent.switchToRatingInfo">
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" id="categoryHeader">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                        data-toggle="collapse" data-target="#categoryAccordion" aria-expanded="false"
+                                        aria-controls="category">
+                                    Categoria
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="categoryAccordion" class="collapse" aria-labelledby="category"
+                             data-parent="#modalAccordionTitle">
+                            <div class="card-body">
+                                <div data-bind="foreach: currentTitleInfo().categories">
+                                    <button class="btn btn-sm" data-bind="click: $parent.switchToCategoryInfo">
+                                        <i class="fa fa-bookmark-o"></i>
+                                        <a data-bind="text: name"></a>
+                                        (<span data-bind="text: id"></span>)
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" id="LaunchHeader">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                        data-toggle="collapse" data-target="#launchAccordion" aria-expanded="false"
+                                        aria-controls="Country Launch">
+                                    Paises de Lançamento
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="launchAccordion" class="collapse" aria-labelledby="Country Launch"
+                             data-parent="#modalAccordionTitle">
+                            <div class="card-body">
+                                <div data-bind="foreach: currentTitleInfo().countries">
+                                    <button class="btn btn-sm" data-bind="click: $parent.switchToCountryInfo">
+                                        <i class="fa fa-flag-o"></i>
+                                        <a data-bind="text: name"></a>
+                                        (<span data-bind="text: id"></span>)
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" id="DateAddedHeader">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                        data-toggle="collapse" data-target="#dateAddedAccordion" aria-expanded="false"
+                                        aria-controls="Date added">
+                                    Data adicionada
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="dateAddedAccordion" class="collapse" aria-labelledby="Date added"
+                             data-parent="#modalAccordionTitle">
+                            <div class="card-body">
+                                <!-- ko if: currentTitleInfo().added != null -->
+                                <p data-bind="text: currentTitleInfo().added"></p>
+                                <!-- /ko -->
+                                <!-- ko if: currentTitleInfo().added == null -->
+                                <p>Sem data adicionada</p>
+                                <!-- /ko -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" id="DirectorsHeader">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                        data-toggle="collapse" data-target="#directorsAccordion" aria-expanded="false"
+                                        aria-controls="Directors">
+                                    Produtores
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="directorsAccordion" class="collapse" aria-labelledby="Directors"
+                             data-parent="#modalAccordionTitle">
+                            <div class="card-body">
+                                <!-- ko if: currentTitleInfo().directors.length > 0 -->
+                                <div data-bind="foreach: currentTitleInfo().directors">
+                                    <button class="btn btn-sm" data-bind="click: $parent.switchToDirectorInfo">
+                                        <i class="fa fa-user-o"></i>
+                                        <a data-bind="text: name"></a>
+                                        (<span data-bind="text: id"></span>)
+                                    </button>
+                                </div>
+                                <!-- /ko -->
+                                <!-- ko if: currentTitleInfo().directors.length == 0 -->
+                                <i class="fa fa-user-o"></i>
+                                <a>Sem informação para mostrar</a>
+                                <!-- /ko -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" id="DurationHeader">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                        data-toggle="collapse" data-target="#durationAccordion" aria-expanded="false"
+                                        aria-controls="Duration">
+                                    Duração
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="durationAccordion" class="collapse" aria-labelledby="Duration"
+                             data-parent="#modalAccordionTitle">
+                            <div class="card-body">
+                                <p data-bind="text: currentTitleInfo().duration"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" id="ClassificationHeader">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                        data-toggle="collapse" data-target="#classificationAccordion"
+                                        aria-expanded="false"
+                                        aria-controls="Classification">
+                                    Classificação
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="classificationAccordion" class="collapse" aria-labelledby="Classification"
+                             data-parent="#modalAccordionTitle">
+                            <div class="card-body">
+                                <!-- ko if: currentTitleInfo().rating != null -->
+                                <!-- ko with: currentTitleInfo().rating -->
+                                <button type="button" class="btn btn-sm" data-bind="click: $parent.switchToRatingInfo">
+                                    <i class="fa fa-star-o"></i>
+                                    <a data-bind="text: code"></a>
+                                    (<span data-bind="text: id"></span>)
+                                </button>
+                                <!-- /ko -->
+                                <!-- /ko -->
+                                <!-- ko if: currentTitleInfo().rating == null -->
                                 <i class="fa fa-star-o"></i>
-                                <a data-bind="text: code"></a>
-                                (<span data-bind="text: id"></span>)
-                            </button>
-                            <!-- /ko -->
-                            <!-- /ko -->
-                            <!-- ko if: currentTitleInfo().rating == null -->
-                            <i class="fa fa-star-o"></i>
-                            <a>Classificação indisponível</a>
-                            <!-- /ko -->
-                        </td>
-                    </tr>
-                    <tr class="row">
-                        <th class="col-md-3">Data de lançamento</th>
-                        <td class="col-md-9" data-bind="text: currentTitleInfo().yearOfRelease"></td>
-                    </tr>
-                    <tr class="row">
-                        <th class="col-md-3">Género</th>
-                        <td class="col-md-9">
-                            <i class="fa fa-address-book-o"></i>
-                            <a data-bind="text: currentTitleInfo().type.name"></a>
-                            (<span data-bind="text: currentTitleInfo().type.id"></span>)
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <a>Classificação indisponível</a>
+                                <!-- /ko -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" id="launchDateHeader">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                        data-toggle="collapse" data-target="#launchDateAccordion"
+                                        aria-expanded="false"
+                                        aria-controls="Launch Date">
+                                    Data de lançamento
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="launchDateAccordion" class="collapse" aria-labelledby="Launch Date"
+                             data-parent="#modalAccordionTitle">
+                            <div class="card-body">
+                                <p data-bind="text: currentTitleInfo().yearOfRelease"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" id="GenreHeader">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                        data-toggle="collapse" data-target="#genreAccordion"
+                                        aria-expanded="false"
+                                        aria-controls="Genre">
+                                    Género
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="genreAccordion" class="collapse" aria-labelledby="Genre"
+                             data-parent="#modalAccordionTitle">
+                            <div class="card-body">
+                                <i class="fa fa-address-book-o"></i>
+                                <a data-bind="text: currentTitleInfo().type.name"></a>
+                                (<span data-bind="text: currentTitleInfo().type.id"></span>)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
@@ -949,27 +1062,38 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table class="table table-striped table-sm small">
-                    <tr class="row">
-                        <th class="col-md-3">Filmes realizados</th>
-                        <td class="col-md-9">
-                            <!-- ko if: currentActorInfo().titles.length > 0 -->
-                            <!-- ko foreach: currentActorInfo().titles -->
-                            <button type="button" class="btn btn-sm" data-bind="click: $parent.switchToTitleInfo">
+                <div class="accordion" id="modalAccordionActor">
+                    <div class="card">
+                        <div class="card-header" id="MovieCastsHeader">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                        data-toggle="collapse" data-target="#movieCastsAccordion" aria-expanded="false"
+                                        aria-controls="Casts">
+                                    Filmes participados
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="movieCastsAccordion" class="collapse" aria-labelledby="Casts"
+                             data-parent="#modalAccordionActor">
+                            <div class="card-body">
+                                <!-- ko if: currentActorInfo().titles.length > 0 -->
+                                <!-- ko foreach: currentActorInfo().titles -->
+                                <button type="button" class="btn btn-sm" data-bind="click: $parent.switchToTitleInfo">
+                                    <i class="fa fa-video-camera"></i>
+                                    <a data-bind="text: name"></a>
+                                    (<span data-bind="text: id"></span>)
+                                </button>
+                                <br>
+                                <!-- /ko -->
+                                <!-- /ko -->
+                                <!-- ko if: currentActorInfo().titles.length == 0 -->
                                 <i class="fa fa-video-camera"></i>
-                                <a data-bind="text: name"></a>
-                                (<span data-bind="text: id"></span>)
-                            </button>
-                            <br>
-                            <!-- /ko -->
-                            <!-- /ko -->
-                            <!-- ko if: currentActorInfo().titles.length == 0 -->
-                            <i class="fa fa-video-camera"></i>
-                            <a>Sem informação disponível para mostrar</a>
-                            <!-- /ko -->
-                        </td>
-                    </tr>
-                </table>
+                                <a>Sem informação disponível para mostrar</a>
+                                <!-- /ko -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -989,38 +1113,79 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table class="table table-striped table-sm small">
-                    <tr class="row">
-                        <th class="col-md-3">Descrição</th>
-                        <td class="col-md-9" data-bind="text: currentRatingInfo().desc"></td>
-                    </tr>
-                    <tr class="row">
-                        <th class="col-md-3">Classificação</th>
-                        <td class="col-md-9" data-bind="text: currentRatingInfo().class"></td>
-                    </tr>
-                    <tr class="row">
-                        <th class="col-md-3">Filmes classificados</th>
-                        <td class="col-md-9">
-                            <!-- ko if: currentRatingInfo().titles.length > 0 -->
-                            <!-- ko foreach: currentRatingInfo().titles.slice(0, 10) -->
-                            <button type="button" class="btn btn-sm" data-bind="click: $parent.switchToTitleInfo">
+                <div class="accordion" id="modalAccordionRating">
+                    <div class="card">
+                        <div class="card-header" id="DescriptionHeader">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                        data-toggle="collapse" data-target="#descriptionAccordion" aria-expanded="false"
+                                        aria-controls="description">
+                                    Descrição
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="descriptionAccordion" class="collapse" aria-labelledby="description"
+                             data-parent="#modalAccordionRating">
+                            <div class="card-body">
+                                <p class="col-md-9" data-bind="text: currentRatingInfo().desc"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" id="RatingClassificationHeader">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                        data-toggle="collapse" data-target="#ratingClassificationAccordion"
+                                        aria-expanded="false"
+                                        aria-controls="Classification">
+                                    Classificação
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="ratingClassificationAccordion" class="collapse" aria-labelledby="Classification"
+                             data-parent="#modalAccordionRating">
+                            <div class="card-body">
+                                <p class="col-md-9" data-bind="text: currentRatingInfo().class"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" id="TitlesHeader">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                        data-toggle="collapse" data-target="#titlesAccordion" aria-expanded="false"
+                                        aria-controls="Titles">
+                                    Filmes
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="titlesAccordion" class="collapse" aria-labelledby="Titles"
+                             data-parent="#modalAccordionRating">
+                            <div class="card-body">
+                                <!-- ko if: currentRatingInfo().titles.length > 0 -->
+                                <!-- ko foreach: currentRatingInfo().titles.slice(0, 10) -->
+                                <button type="button" class="btn btn-sm text-left"
+                                        data-bind="click: $parent.switchToTitleInfo">
+                                    <i class="fa fa-video-camera"></i>
+                                    <a data-bind="text: name"></a>
+                                    (<span data-bind="text: id"></span>)
+                                </button>
+                                <br>
+                                <!-- /ko -->
+                                <!-- ko if: currentRatingInfo().titles.length > 10 -->
+                                <p>Entre outros</p>
+                                <!-- /ko -->
+                                <!-- /ko -->
+                                <!-- ko if: currentRatingInfo().titles.length == 0 -->
                                 <i class="fa fa-video-camera"></i>
-                                <a data-bind="text: name"></a>
-                                (<span data-bind="text: id"></span>)
-                            </button>
-                            <br>
-                            <!-- /ko -->
-                            <!-- ko if: currentRatingInfo().titles.length > 10 -->
-                            <p>Entre outros</p>
-                            <!-- /ko -->
-                            <!-- /ko -->
-                            <!-- ko if: currentRatingInfo().titles.length == 0 -->
-                            <i class="fa fa-video-camera"></i>
-                            <a>Sem informação disponível para mostrar</a>
-                            <!-- /ko -->
-                        </td>
-                    </tr>
-                </table>
+                                <a>Sem informação disponível para mostrar</a>
+                                <!-- /ko -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -1029,7 +1194,8 @@
     </div>
 </div>
 <!-- Modal for countries -->
-<div class="modal fade" id="countryInfoModal" tabindex="-1" role="dialog" aria-labelledby="MoreInformationForCountry"
+<div class="modal fade" id="countryInfoModal" tabindex="-1" role="dialog"
+     aria-labelledby="MoreInformationForCountry"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -1040,30 +1206,41 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table class="table table-striped table-sm small">
-                    <tr class="row">
-                        <th class="col-md-3">Filmes publicados</th>
-                        <td class="col-md-9">
-                            <!-- ko if: currentCountryInfo().titles.length > 0 -->
-                            <!-- ko foreach: currentCountryInfo().titles.slice(0, 10) -->
-                            <button type="button" class="btn btn-sm" data-bind="click: $parent.switchToTitleInfo">
+                <div class="accordion" id="modalAccordionCountries">
+                    <div class="card">
+                        <div class="card-header" id="TitlesByCountryHeader">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                        data-toggle="collapse" data-target="#titlesByCountryAccordion" aria-expanded="false"
+                                        aria-controls="titlesByCountry">
+                                    Filmes realizados
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="titlesByCountryAccordion" class="collapse" aria-labelledby="titlesByCountry"
+                             data-parent="#modalAccordionCountries">
+                            <div class="card-body">
+                                <!-- ko if: currentCountryInfo().titles.length > 0 -->
+                                <!-- ko foreach: currentCountryInfo().titles.slice(0, 10) -->
+                                <button type="button" class="btn btn-sm" data-bind="click: $parent.switchToTitleInfo">
+                                    <i class="fa fa-video-camera"></i>
+                                    <a data-bind="text: name"></a>
+                                    (<span data-bind="text: id"></span>)
+                                </button>
+                                <br>
+                                <!-- /ko -->
+                                <!-- ko if: currentCountryInfo().titles.length > 10 -->
+                                <p>Entre outros</p>
+                                <!-- /ko -->
+                                <!-- /ko -->
+                                <!-- ko if: currentCountryInfo().titles.length == 0 -->
                                 <i class="fa fa-video-camera"></i>
-                                <a data-bind="text: name"></a>
-                                (<span data-bind="text: id"></span>)
-                            </button>
-                            <br>
-                            <!-- /ko -->
-                            <!-- ko if: currentCountryInfo().titles.length > 10 -->
-                            <p>Entre outros</p>
-                            <!-- /ko -->
-                            <!-- /ko -->
-                            <!-- ko if: currentCountryInfo().titles.length == 0 -->
-                            <i class="fa fa-video-camera"></i>
-                            <a>Sem informação disponível para mostrar</a>
-                            <!-- /ko -->
-                        </td>
-                    </tr>
-                </table>
+                                <a>Sem informação disponível para mostrar</a>
+                                <!-- /ko -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -1072,7 +1249,8 @@
     </div>
 </div>
 <!-- Modal for directors -->
-<div class="modal fade" id="directorInfoModal" tabindex="-1" role="dialog" aria-labelledby="MoreInformationForDirectors"
+<div class="modal fade" id="directorInfoModal" tabindex="-1" role="dialog"
+     aria-labelledby="MoreInformationForDirectors"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -1083,30 +1261,41 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table class="table table-striped table-sm small">
-                    <tr class="row">
-                        <th class="col-md-3">Filmes realizados</th>
-                        <td class="col-md-9">
-                            <!-- ko if: currentDirectorInfo().titles.length > 0 -->
-                            <!-- ko foreach: currentDirectorInfo().titles.slice(0, 10) -->
-                            <button type="button" class="btn btn-sm" data-bind="click: $parent.switchToTitleInfo">
+                <div class="accordion" id="modalAccordionDirectors">
+                    <div class="card">
+                        <div class="card-header" id="TitlesByDirectorHeader">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                        data-toggle="collapse" data-target="#titlesByDirectorAccordion" aria-expanded="false"
+                                        aria-controls="titlesByDirector">
+                                    Filmes realizados
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="titlesByDirectorAccordion" class="collapse" aria-labelledby="titlesByDirector"
+                             data-parent="#modalAccordionDirectors">
+                            <div class="card-body">
+                                <!-- ko if: currentDirectorInfo().titles.length > 0 -->
+                                <!-- ko foreach: currentDirectorInfo().titles.slice(0, 10) -->
+                                <button type="button" class="btn btn-sm" data-bind="click: $parent.switchToTitleInfo">
+                                    <i class="fa fa-video-camera"></i>
+                                    <a data-bind="text: name"></a>
+                                    (<span data-bind="text: id"></span>)
+                                </button>
+                                <br>
+                                <!-- /ko -->
+                                <!-- ko if: currentDirectorInfo().titles.length > 10 -->
+                                <p>Entre outros</p>
+                                <!-- /ko -->
+                                <!-- /ko -->
+                                <!-- ko if: currentDirectorInfo().titles.length == 0 -->
                                 <i class="fa fa-video-camera"></i>
-                                <a data-bind="text: name"></a>
-                                (<span data-bind="text: id"></span>)
-                            </button>
-                            <br>
-                            <!-- /ko -->
-                            <!-- ko if: currentDirectorInfo().titles.length > 10 -->
-                            <p>Entre outros</p>
-                            <!-- /ko -->
-                            <!-- /ko -->
-                            <!-- ko if: currentDirectorInfo().titles.length == 0 -->
-                            <i class="fa fa-video-camera"></i>
-                            <a>Sem informação disponível para mostrar</a>
-                            <!-- /ko -->
-                        </td>
-                    </tr>
-                </table>
+                                <a>Sem informação disponível para mostrar</a>
+                                <!-- /ko -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
