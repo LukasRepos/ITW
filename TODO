@@ -1,8 +1,0 @@
-Services to add:
-
--> Adicionar maneira de aumentar ou diminuir numero de linhas de tabela visualizados de cada vez
-    - Add infrastructure for it, don't know how to integrate into the design (is {tab}RecordCount)
--> FIXME: Não consigo fazer scroll para baixo https://imgur.com/a/Xq1YH7V
-    - Don't know what is the problem, maybe ask to teacher
--> Na secção de ratings, ter "Criança" ou "Adulto" no espaço branco entre Code e o botão Modal
-    - Did not understand
